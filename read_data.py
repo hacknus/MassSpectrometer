@@ -35,11 +35,12 @@ def avg_all():
     files = os.listdir("Data")
     for file in files:
         filename = "Data/" + file
-        df = convert_file(filename,True)
+        df = convert_file(filename, True)
         df.to_csv("DataAvg/" + file, index=0)
         print(f"completed {file}")
         # make a histogram of 50 bars
-        #hist(df, file, len(df)//50)
+        # hist(df, file, len(df)//50)
+        # do not create a histogram (bin combining = 1), just a bar plot
         hist(df, file, 1)
 
 
