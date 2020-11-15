@@ -39,7 +39,8 @@ def avg_all():
         df.to_csv("DataAvg/" + file, index=0)
         print(f"completed {file}")
         # make a histogram of 50 bars
-        hist(df, file, len(df)//50)
+        #hist(df, file, len(df)//50)
+        hist(df, file, 1)
 
 
 def convert_file(filename, average=False):
