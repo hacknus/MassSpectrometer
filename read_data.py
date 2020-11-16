@@ -11,17 +11,20 @@ def hist(df, file, combine=1, plot=False):
         n = combine
     amu = np.array(df.amu)[:-n:combine]
     p = np.array(df.p)[:-n:combine]
-    err = np.array(df.err)[:-n:combine]
+    err_quat = np.array(df.err)[:-n:combine]**2
     for i in range(1, combine):
         amu += np.array(df.amu)[i:-n:combine]
         p += np.array(df.p)[i:-n:combine]
-        err += np.array(df.err)[i:-n:combine]
+        err_quat += np.array(df.err)[i:-n:combine]**2
     amu /= combine
+    err = np.sqrt(err_quat)
+    
     plt.title(file.replace(".csv", ""))
-    # error bars should actually be sqrt(p) but then they are huge!
-    plt.bar(amu, p, yerr=err, width=0.2*combine, edgecolor="black", color="red", label=str(df.type[0]))
+    plt.bar(amu,p,width=0.2*combine,color="red", label=str(df.type[0]))
+    plt.errorbar(amu, p, err, capsize=3, capthick=0.4 ,ecolor="black", elinewidth=0.4 ,fmt ='none')
+
     plt.legend()
-    plt.semilogy()
+#    plt.semilogy()
     plt.ylabel(r"$p$ [Torr]")
     plt.xlabel("amu")
     if not plot:
@@ -64,8 +67,8 @@ def convert_file(filename, average=False):
             for c in range(2, cycles + 1):
                 d[f"p{c}"] = np.array(df[df.Cycle == c]["SEM torr"])
     else:
-        df_mean = df.groupby("mass amu").mean()
-        df_std = df.groupby("mass amu").std()
+        df_mean = df[df.Cycle > 2].groupby("mass amu").mean()
+        df_std = df[df.Cycle > 2].groupby("mass amu").std()
         try:
             d = {"amu": amu,
                  "p": np.array(df_mean["Faraday torr"]),
