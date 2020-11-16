@@ -11,7 +11,7 @@ def process_data(filename, baseline_filename):
     df_noise = pd.read_csv(baseline_path)
     # subtract noise
     df["p"] = df["p"] - df_noise["p"]
-    df["err"] = df["err"] - df_noise["err"]
+    df["err"] = np.sqrt(df["err"]**2 + df_noise["err"]**2)
     hist(df, filename, combine=1, plot=True)
 
 
