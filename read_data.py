@@ -13,30 +13,27 @@ def hist(df, file, combine=1, plot=False, start=0, end=-1):
         n = combine
     amu = np.array(amu0)[:-n:combine]
     p0 = np.array(df.p)
-    p0 = np.concatenate(([p0[2],p0[1]],p0,[p0[-2],p0[-3]]))
+    p0 = np.concatenate(([p0[2]],p0,[p0[-2],p0[-3],p0[-4]])) #startet nicht bei p0[2] da daten satz um eins verschoben ist
     p = np.array(p0)[:-n:combine]
     err_quat0 = np.array(df.err)**2
-    err_quat0 = np.concatenate(([err_quat0[2],err_quat0[1]],err_quat0,[err_quat0[-2],err_quat0[-3]]))
+    err_quat0 = np.concatenate(([err_quat0[2]],err_quat0,[err_quat0[-2],err_quat0[-3],err_quat0[-4]]))
     err_quat = np.array(err_quat0)[:-n:combine]
     for i in range(1, combine):
         amu += amu0[i:-n:combine]
         p += p0[i:-n:combine]
         err_quat += err_quat0[i:-n:combine]**2
     amu /= combine
-    err = np.sqrt(err_quat)
-    plt.title(file.replace(".csv", ""))
-    plt.bar(amu,p,width=0.2*combine,color="red", label=str(df.type[0]))
-    plt.errorbar(amu, p, err, capsize=3, capthick=0.4 ,ecolor="black", elinewidth=0.4 ,fmt ='none')
-
-    plt.legend()
-#    plt.semilogy()
-    plt.ylabel(r"$p$ [Torr]")
-    plt.xlabel("amu")
+    err = np.sqrt(err_quat)    
     if not plot:
+        plt.title(file.replace(".csv", ""))
+        plt.bar(amu,p,width=0.2*combine,color="red", label=str(df.type[0]))
+        plt.errorbar(amu, p, err, capsize=3, capthick=0.4 ,ecolor="black", elinewidth=0.4 ,fmt ='none')
+        plt.legend()
+        plt.ylabel(r"$p$ [Torr]")
+        plt.xlabel("amu")
         plt.savefig("Report/DataAvgPlots/" + file.replace(".csv", ".pdf"))
         plt.clf()
     else:
-        plt.show()
         return amu, p, err
 
 
