@@ -39,7 +39,7 @@ def avg_all():
     for file in files:
         filename = "Data/" + file
         df = convert_file(filename, True)
-        #df.to_csv("DataAvg/" + file, index=0)
+        df.to_csv("DataAvg/" + file, index=0)
         print(f"completed {file}")
         # make a histogram of 50 bars
         # hist(df, file, len(df)//50)
