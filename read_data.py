@@ -11,20 +11,20 @@ def hist(df, file, combine=1, plot=False):
         n = combine
     amu = np.array(df.amu)[:-n:combine]
     p = np.array(df.p)[:-n:combine]
-    err_quat = np.array(df.err)[:-n:combine]**2
+    err_quat = np.array(df.err)[:-n:combine] ** 2
     for i in range(1, combine):
         amu += np.array(df.amu)[i:-n:combine]
         p += np.array(df.p)[i:-n:combine]
-        err_quat += np.array(df.err)[i:-n:combine]**2
+        err_quat += np.array(df.err)[i:-n:combine] ** 2
     amu /= combine
     err = np.sqrt(err_quat)
-    
+
     plt.title(file.replace(".csv", ""))
-    plt.bar(amu,p,width=0.2*combine,color="red", label=str(df.type[0]))
-    plt.errorbar(amu, p, err, capsize=3, capthick=0.4 ,ecolor="black", elinewidth=0.4 ,fmt ='none')
+    plt.bar(amu, p, width=0.2 * combine, color="red", label=str(df.type[0]))
+    plt.errorbar(amu, p, err, capsize=3, capthick=0.4, ecolor="black", elinewidth=0.4, fmt='none')
 
     plt.legend()
-#    plt.semilogy()
+    #    plt.semilogy()
     plt.ylabel(r"$p$ [Torr]")
     plt.xlabel("amu")
     if not plot:
@@ -39,7 +39,7 @@ def avg_all():
     for file in files:
         filename = "Data/" + file
         df = convert_file(filename, True)
-        df.to_csv("DataAvg/" + file, index=0)
+        #df.to_csv("DataAvg/" + file, index=0)
         print(f"completed {file}")
         # make a histogram of 50 bars
         # hist(df, file, len(df)//50)
@@ -56,10 +56,11 @@ def convert_file(filename, average=False):
             p1 = np.array(df[df.Cycle == 1]["Faraday torr"])
             d = {"amu": amu,
                  "p1": p1,
-                 "type": ["Faraday"] * len(amu) }
+                 "type": ["Faraday"] * len(amu)}
             for c in range(2, cycles + 1):
                 d[f"p{c}"] = np.array(df[df.Cycle == c]["Faraday torr"])
         except KeyError:
+            print("found SEM")
             p1 = np.array(df[df.Cycle == 1]["SEM torr"])
             d = {"amu": amu,
                  "p1": p1,
@@ -73,8 +74,9 @@ def convert_file(filename, average=False):
             d = {"amu": amu,
                  "p": np.array(df_mean["Faraday torr"]),
                  "err": np.array(df_std["Faraday torr"]),
-                 "type": ["Faraday"]*len(amu)}
+                 "type": ["Faraday"] * len(amu)}
         except KeyError:
+            print("found SEM")
             d = {"amu": amu,
                  "p": np.array(df_mean["SEM torr"]),
                  "err": np.array(df_std["SEM torr"]),
