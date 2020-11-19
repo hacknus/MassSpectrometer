@@ -10,7 +10,7 @@ end = 50
 
 o2 = np.arange(8, dtype=np.float)
 co2 = np.arange(8, dtype=np.float)
-breath = np.arange(1,7)
+breath = np.arange(1, 7)
 colors = ["blue", "orange", "red", "green", "black", "yellow", "brown"]
 amu0, p0, err0 = sequences('air0.csv', False, combine, start, end, relative, False, new=True)
 fig, ax = plt.subplots(1, 1)

@@ -72,6 +72,21 @@ def calibrate_all():
         df = calibrate_dataset(df)
         df.to_csv(f"Data2AvgCal/{file}", index=0)
         print(f"calibrated {file}")
+    argon_path = "Data2AvgCal/air6.csv"
+    df = pd.read_csv(argon_path)
+    n = get_nist_peaks("argon", 1)
+    amu = np.array(df.amu)
+    p = np.array(df.p)
+    err = np.array(df.err)
+    fig, ax = plt.subplots(1, 1)
+    ax.bar(n.m, n.y * 1.1 * np.max(p) / 10000, width=0.9, alpha=0.5, color="orange", label="NIST")
+    ax.bar(amu, p, width=0.1, color="blue", label="measurements")
+    ax.errorbar(amu, p, err, capsize=3, capthick=0.4, ecolor="black", elinewidth=0.4, fmt='none')
+    popt = fit_peak(amu, p, m1=30, m2=34, ax=ax)
+    ax.legend()
+    ax.set_xlim(30, 34)
+    ax.set_ylim(0, 3e-7)
+    plt.show()
 
 
 if __name__ == "__main__":
