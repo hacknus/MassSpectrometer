@@ -34,7 +34,7 @@ def make_plot_argon(plot=True):
     p = np.array(df.p)
     err = np.array(df.err)
     fig, ax = plt.subplots(1, 1)
-    ax.bar(n.m, n.y * 1.1*np.max(p)/10000, width=0.9, alpha=0.5, color="orange", label="NIST")
+    ax.bar(n.m, n.y * 1.1 * np.max(p) / 10000, width=0.9, alpha=0.5, color="orange", label="NIST")
     ax.bar(amu, p, width=0.1, color="blue", label="measurements")
     ax.errorbar(amu, p, err, capsize=3, capthick=0.4, ecolor="black", elinewidth=0.4, fmt='none')
     popt = fit_peak(amu, p, m1=38, m2=42, ax=ax)
@@ -46,8 +46,22 @@ def make_plot_argon(plot=True):
     return popt[1], np.array(n.m)[0]
 
 
+def init_calibration():
+    m_x, m_x_true = make_plot_xenon(False)
+    m_a, m_a_true = make_plot_argon(False)
+    d = {"m_a_true": [m_a_true],
+         "m_a": [m_a],
+         "m_x_true": [m_x_true],
+         "m_x": [m_x]}
+    df = pd.DataFrame(data=d)
+    df.to_csv("calib_params.csv", index=0)
+
+
 def calibrate_dataset(df):
-    m_x, m_x_true = make_plot_xenon(True)
-    m_a, m_a_true = make_plot_argon(True)
-    df.amu = m_a_true + (m_x_true - m_a_true) / (m_x - m_a) * (df.amu - m_a)
+    p = pd.read_csv("calib_params.csv")
+    df.amu = p.m_a_true[0] + (p.m_x_true[0] - p.m_a_true[0]) / (p.m_x[0] - p.m_a[0]) * (df.amu - p.m_a[0])
     return df
+
+
+if __name__ == "__main__":
+    init_calibration()
