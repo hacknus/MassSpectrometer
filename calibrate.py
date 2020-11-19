@@ -4,6 +4,7 @@ from utils import fit_peak
 from utils import fit_xenon
 import pandas as pd
 from nist import get_nist_peaks
+import os
 
 
 def make_plot_xenon(plot=True):
@@ -63,5 +64,16 @@ def calibrate_dataset(df):
     return df
 
 
+def calibrate_all():
+    files = os.listdir("Data2Avg")
+    for file in files:
+        path = f"Data2Avg/{file}"
+        df = pd.read_csv(path)
+        df = calibrate_dataset(df)
+        df.to_csv(f"Data2AvgCal/{file}", index=0)
+        print(f"calibrated {file}")
+
+
 if __name__ == "__main__":
-    init_calibration()
+    # init_calibration()
+    calibrate_all()
