@@ -38,12 +38,16 @@ def hist(df, file, combine=1, plot=False, start=0, end=-1):
         return amu, p, err
 
 
-def avg_all():
-    files = os.listdir("Data")
+def avg_all(new=False):
+    if new:
+        path = "Data2"
+    else:
+        path = "Data"
+    files = os.listdir(path)
     for file in files:
-        filename = "Data/" + file
+        filename = f"{path}/" + file
         df = convert_file(filename, True)
-        df.to_csv("DataAvg/" + file, index=0)
+        df.to_csv(f"{path}Avg/" + file, index=0)
         print(f"completed {file}")
         # make a histogram of 50 bars
         # hist(df, file, len(df)//50)
@@ -103,4 +107,4 @@ def plot(df):
 
 
 if __name__ == "__main__":
-    avg_all()
+    avg_all(new=True)

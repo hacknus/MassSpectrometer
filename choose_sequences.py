@@ -5,11 +5,17 @@ import os
 from read_data import hist
 from utils import fit_peak
 
-def sequences(filename, baseline_filename, combine=5, start=0, end=140, relative=True, plot=True):
-    path = "DataAvg/" + filename
+def sequences(filename, baseline_filename, combine=5, start=0, end=140, relative=True, plot=True, new=False):
+    if new:
+        path = "Data2Avg/" + filename
+    else:
+        path = "DataAvg/" + filename
     df = pd.read_csv(path)
     if baseline_filename != False:
-        baseline_path = "DataAvg/" + baseline_filename
+        if new:
+            baseline_path = "Data2Avg/" + baseline_filename
+        else:
+            baseline_path = "DataAvg/" + baseline_filename
         df_noise = pd.read_csv(baseline_path)
         # subtract noise
         #df["p"] = df["p"] - df_noise["p"]*sum(df["p"])/sum(df_noise["p"])   #normation of pressure
@@ -19,8 +25,8 @@ def sequences(filename, baseline_filename, combine=5, start=0, end=140, relative
     if relative:
         err = err / sum(p) * 100
         p = p / sum(p) * 100
-    end = int(end * 5 / combine)
-    start = int(start * 5 / combine)
+    end = int(end * 10 / combine)
+    start = int(start * 10 / combine)
     if end > len(amu):
         end = len(amu)
     amu = amu[start:end + 1]
