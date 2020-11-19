@@ -18,9 +18,9 @@ o2 = []
 co2 = []
 for i, c in zip(breath, colors):
     amu, p, err = sequences(f"air{i}.csv", False, combine, start, end, relative, False, new=True)
-    popt = fit_peak(amu, p, err, 30, 34, ax)
+    popt = fit_peak(amu, p, err, m1=30, m2=34, ax=ax)
     o2.append(popt[0])
-    popt = fit_peak(amu, p, err, 42, 46, ax)
+    popt = fit_peak(amu, p, err, m1=42, m2=46, ax=ax)
     co2.append(popt[0])
     # print(popt[0])
     ax.plot(amu, p, color=c, label=f"breath {i}")
