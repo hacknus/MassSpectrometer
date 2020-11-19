@@ -8,14 +8,13 @@ from read_data import hist
 def sequences(filename, baseline_filename, combine=5, start=0, end=140, relative=True, plot=True):
     path = "DataAvg/" + filename
     df = pd.read_csv(path)
-    if baseline_filename == False:
-        df_noise = df * 0
-    else:
+    if baseline_filename != False:
         baseline_path = "DataAvg/" + baseline_filename
         df_noise = pd.read_csv(baseline_path)
         # subtract noise
-    df["p"] = df["p"] - df_noise["p"]
-    df["err"] = np.sqrt(df["err"] ** 2 + df_noise["err"] ** 2)
+        #df["p"] = df["p"] - df_noise["p"]*sum(df["p"])/sum(df_noise["p"])   #normation of pressure
+        df["p"] = df["p"] - df_noise["p"]
+        df["err"] = np.sqrt(df["err"] ** 2 + df_noise["err"] ** 2)
     amu, p, err = hist(df, filename, combine, plot=True)
     if relative:
         err = err / sum(p) * 100

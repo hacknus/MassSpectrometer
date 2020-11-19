@@ -49,7 +49,7 @@ plt.plot()
 fig, ax = plt.subplots(1, 2)
 ax3 = ax[0]
 ax4 = ax[1]
-amu_min = 27
+amu_min = 26
 amu_max = 28
 for i in delta_ms:
     amu, p, err = sequences("restgasspektrum_FARx7_{}prozent.csv".format(i), False, combine, amu_min, amu_max, relative,
