@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import os
 from read_data import hist
-
+from utils import fit_peak
 
 def sequences(filename, baseline_filename, combine=5, start=0, end=140, relative=True, plot=True):
     path = "DataAvg/" + filename
@@ -29,15 +29,17 @@ def sequences(filename, baseline_filename, combine=5, start=0, end=140, relative
     err = err[start:end + 1]
 
     if plot == True:
-        plt.title(filename.replace(".csv", ""))
-        plt.bar(amu, p, width=0.2 * combine, color="red", label=str(df.type[0]))
-        plt.errorbar(amu, p, err, capsize=3, capthick=0.4, ecolor="black", elinewidth=0.4, fmt='none')
-        plt.legend()
+        fig, ax = plt.subplots(1, 1)
+        ax.set_title(filename.replace(".csv", ""))
+        ax.bar(amu, p, width=0.2 * combine, color="red", label=str(df.type[0]))
+        ax.errorbar(amu, p, err, capsize=3, capthick=0.4, ecolor="black", elinewidth=0.4, fmt='none')
+        #popt = fit_peak(amu, p, m1=start, m2=end, ax=ax)
+        ax.legend()
         if relative:
-            plt.ylabel(r"$p_{part}$ / $p_{tot}$ [%]")
+            ax.set_ylabel(r"$p_{part}$ / $p_{tot}$ [%]")
         else:
-            plt.ylabel(r"$p$ [Torr]")
-        plt.xlabel("amu")
+            ax.set_ylabel(r"$p$ [Torr]")
+        ax.set_xlabel("amu")
         plt.savefig("Report/DataResultsPlots/" + filename.replace(".csv", ".pdf"))
         plt.show()
     else:

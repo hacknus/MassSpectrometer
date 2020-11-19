@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import os
 from read_data import hist
 from choose_sequences import sequences
+from utils import fit_peak
+
 
 combine = 1
 relative = False
@@ -21,6 +23,7 @@ for i in [0, 1]:
                             False)
     ax1.plot(amu, p)
     ax1.errorbar(amu, p, err, capsize=3, capthick=0.4, ecolor="black", elinewidth=0.4, fmt='none')
+    popt = fit_peak(amu, p, ax=ax1)
 ax1.set_title(r'$H_2$')
 if relative:
     ax1.set_ylabel(r"$p_{part}$ / $p_{tot}$ [%]")
@@ -35,6 +38,7 @@ for i in [0, 1]:
                             False)
     ax2.plot(amu, p, label=detector[i])
     ax2.errorbar(amu, p, err, capsize=3, capthick=0.4, ecolor="black", elinewidth=0.4, fmt='none')
+    popt = fit_peak(amu, p, ax=ax2)
 ax2.set_title(r'$H_2O$')
 ax2.legend()
 if relative:
@@ -46,7 +50,7 @@ ax2.set_xlabel("amu")
 fig.suptitle(r'variation of detector')
 plt.tight_layout()
 plt.savefig("Report/DataResultsPlots/delta_m_variation_H2_and_H20.pdf")
-plt.plot()
+plt.show()
 
 fig, ax = plt.subplots(1, 2)
 ax3 = ax[0]
@@ -58,6 +62,7 @@ for i in [0, 1]:
                             False)
     ax3.plot(amu, p, label=detector[i])
     ax3.errorbar(amu, p, err, capsize=3, capthick=0.4, ecolor="black", elinewidth=0.4, fmt='none')
+    #popt = fit_peak(amu, p, ax=ax3)
 ax3.set_title(r'$N_2$')
 
 if relative:
@@ -73,6 +78,7 @@ for i in [0, 1]:
                             False)
     ax4.plot(amu, p, label=detector[i])
     ax4.errorbar(amu, p, err, capsize=3, capthick=0.4, ecolor="black", elinewidth=0.4, fmt='none')
+    #popt = fit_peak(amu, p, ax=ax4)
 ax4.set_title(r'$O_2$')
 ax4.legend()
 # if relative:
@@ -83,7 +89,7 @@ ax4.set_xlabel("amu")
 fig.suptitle(r'variation of detector')
 plt.tight_layout()
 plt.savefig("Report/DataResultsPlots/detector_variation_N2_and_O2.pdf")
-plt.plot()
+plt.show()
 
 fig, ax = plt.subplots(1, 1)
 ax5 = ax
@@ -94,6 +100,7 @@ for i in [0, 1]:
                             False)
     ax5.plot(amu, p, label=detector[i])
     ax5.errorbar(amu, p, err, capsize=3, capthick=0.4, ecolor="black", elinewidth=0.4, fmt='none')
+    #popt = fit_peak(amu, p, ax=ax5)
 ax5.set_title(r'$CO_2$')
 ax5.legend()
 if relative:
