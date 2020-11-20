@@ -27,8 +27,12 @@ def sequences(filename, baseline_filename, combine=5, start=0, end=140, relative
     if relative:
         err = err / sum(p) * 100
         p = p / sum(p) * 100
-    end = int(end * 10 / combine)
-    start = int(start * 10 / combine)
+    if new:
+        end = int(end * 10 / combine)
+        start = int(start * 10 / combine)
+    else:
+        end = int(end * 5 / combine)
+        start = int(start * 5 / combine)
     if end > len(amu):
         end = len(amu)
     amu = amu[start:end + 1]
@@ -55,4 +59,4 @@ def sequences(filename, baseline_filename, combine=5, start=0, end=140, relative
 
 
 if __name__ == '__main__':
-    sequences("Xenon.csv", "xenonbaseline.csv", 5, 0, 150, False, True)
+    sequences("restgasspektrum_FARx7_5prozent.csv", False, 5, 0, 150, False, True)
