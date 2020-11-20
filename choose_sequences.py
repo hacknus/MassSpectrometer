@@ -45,7 +45,7 @@ def sequences(filename, baseline_filename, combine=5, start=0, end=140, relative
         ax.set_title(filename.replace(".csv", ""))
         ax.bar(amu, p, width=0.1 * combine, color="red", label=str(df.type[0]))
         ax.errorbar(amu, p, err, capsize=3, capthick=0.4, ecolor="black", elinewidth=0.4, fmt='none')
-        # popt = fit_peak(amu, p, m1=start, m2=end, ax=ax)
+        # popt, pcov = fit_peak(amu, p, m1=start, m2=end, ax=ax)
         ax.legend()
         if relative:
             ax.set_ylabel(r"$p_{part}$ / $p_{tot}$ [%]")
