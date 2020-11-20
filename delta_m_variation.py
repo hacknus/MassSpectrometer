@@ -64,7 +64,7 @@ else:
     ax3.set_ylabel(r"$p$ [Torr]")
 ax3.set_xlabel("amu")
 
-amu_min = 31
+amu_min = 30
 amu_max = 32
 for i in delta_ms:
     amu, p, err = sequences("restgasspektrum_FARx7_{}prozent.csv".format(i), False, combine, amu_min, amu_max, relative,
@@ -85,7 +85,7 @@ plt.plot()
 
 fig, ax = plt.subplots(1, 1)
 ax5 = ax
-amu_min = 43
+amu_min = 42
 amu_max = 44
 for i in delta_ms:
     amu, p, err = sequences("restgasspektrum_FARx7_{}prozent.csv".format(i), False, combine, amu_min, amu_max, relative,
