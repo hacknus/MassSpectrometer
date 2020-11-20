@@ -40,6 +40,7 @@ plt.legend()
 plt.show()
 plt.plot(np.arange(6), o2, label=r'$O_2$')
 plt.plot(np.arange(6), co2, label=r'$CO_2$')
+plt.errorbar(np.arange(6), co2, co2err, capsize=3, capthick=0.4 ,ecolor="black", elinewidth=0.4 ,fmt ='o',label=r'$CO_2$')
 plt.legend()
 if relative:
     plt.ylabel(r"$p_{part}$ / $p_{tot}$ [%]")

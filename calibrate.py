@@ -18,13 +18,13 @@ def make_plot_xenon(plot=True):
     ax.bar(n.m, n.y * np.sum(p) / 3500000, width=0.9, alpha=0.5, color="orange", label="NIST")
     ax.bar(amu, p, width=0.1, color="blue", label="measurements")
     ax.errorbar(amu, p, err, capsize=3, capthick=0.4, ecolor="black", elinewidth=0.4, fmt='none')
-    popt = fit_xenon(amu, p, m1=128, m2=136.5, ax=ax)
+    popt, pcov = fit_xenon(amu, p, m1=128, m2=136.5, ax=ax)
     ax.legend()
     ax.set_xlim(128, 137)
     ax.set_ylim(0, 3e-8)
     if plot:
         plt.show()
-    return popt[3], np.array(n.m)[0]
+    return popt[3], pcov[3][3], np.array(n.m)[0]
 
 
 def make_plot_argon(plot=True):
@@ -38,22 +38,24 @@ def make_plot_argon(plot=True):
     ax.bar(n.m, n.y * 1.1 * np.max(p) / 10000, width=0.9, alpha=0.5, color="orange", label="NIST")
     ax.bar(amu, p, width=0.1, color="blue", label="measurements")
     ax.errorbar(amu, p, err, capsize=3, capthick=0.4, ecolor="black", elinewidth=0.4, fmt='none')
-    popt = fit_peak(amu, p, m1=38, m2=42, ax=ax)
+    popt, pcov = fit_peak(amu, p, m1=38, m2=42, ax=ax)
     ax.legend()
     ax.set_xlim(38, 42)
     ax.set_ylim(0, 3e-7)
     if plot:
         plt.show()
-    return popt[1], np.array(n.m)[0]
+    return popt[1], pcov[1][1], np.array(n.m)[0]
 
 
 def init_calibration():
-    m_x, m_x_true = make_plot_xenon(False)
-    m_a, m_a_true = make_plot_argon(False)
+    m_x, m_x_err, m_x_true = make_plot_xenon(False)
+    m_a, m_a_err, m_a_true = make_plot_argon(False)
     d = {"m_a_true": [m_a_true],
          "m_a": [m_a],
+         "m_a_err": [m_a_err],
          "m_x_true": [m_x_true],
-         "m_x": [m_x]}
+         "m_x": [m_x],
+         "m_x_err": [m_x_err]}
     df = pd.DataFrame(data=d)
     df.to_csv("calib_params.csv", index=0)
 
@@ -61,6 +63,10 @@ def init_calibration():
 def calibrate_dataset(df):
     p = pd.read_csv("calib_params.csv")
     df.amu = p.m_a_true[0] + (p.m_x_true[0] - p.m_a_true[0]) / (p.m_x[0] - p.m_a[0]) * (df.amu - p.m_a[0])
+    A = (p.m_x_true[0] - p.m_a_true[0]) / (p.m_x[0] - p.m_a[0]) ** 2 * (df.amu - p.m_x[0]) * p.m_a_err[0]
+    B = (p.m_x_true[0] - p.m_a_true[0]) / (p.m_x[0] - p.m_a[0]) ** 2 * (p.m_a[0] - df.amu) * p.m_x_err[0]
+    m_err = np.sqrt(A ** 2 + B ** 2)
+    print(f"The average error on the calibrated amu-axis is: {np.mean(m_err):.5f}")
     return df
 
 
@@ -90,5 +96,5 @@ def calibrate_all():
 
 
 if __name__ == "__main__":
-    # init_calibration()
+    init_calibration()
     calibrate_all()
