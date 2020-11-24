@@ -5,6 +5,32 @@ import os
 from read_data import hist
 from choose_sequences import sequences
 from utils import fit_peak
+from voltage_variation import double_plot, sequence_plot
+
+
+
+combine = 1
+relative = False
+delta_ms = np.array([50,70,90])
+colors = ['r','b','g','y']
+title = r'Acceleration voltage'
+param = 'detector'
+
+double_plot(param,title,0,2,r'$H_2$',16,19,r'$H_2O$')
+
+double_plot(param,title,26,28,r'$N_2$',30,32,r'$O_2$')
+
+fig, ax = plt.subplots(1, 1)
+sequence_plot(param,ax,42,44,r'$CO_2$',True)
+fig.suptitle(r'variation of {}'.format(param))
+plt.tight_layout()
+plt.savefig("Report/DataResultsPlots/{}_variation_CO2.pdf".format(param))
+plt.show()
+
+
+
+
+
 
 
 combine = 1

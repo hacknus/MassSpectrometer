@@ -75,8 +75,14 @@ def convert_file(filename, average=False):
             for c in range(2, cycles + 1):
                 d[f"p{c}"] = np.array(df[df.Cycle == c]["SEM torr"])
     else:
-        df_mean = df[df.Cycle > 2].groupby("mass amu").mean()
-        df_std = df[df.Cycle > 2].groupby("mass amu").std()
+        i=2
+        if filename[0:42]=='Data/restgasspektrum_FARx7_20prozent_5res_' :
+            print('true')
+            i=3
+        if filename == 'Data2/xenonbaseline_highres.csv':
+            i=3
+        df_mean = df[df.Cycle > i].groupby("mass amu").mean()
+        df_std = df[df.Cycle > i].groupby("mass amu").std()
         try:
             d = {"amu": amu,
                  "p": np.array(df_mean["Faraday torr"]),
