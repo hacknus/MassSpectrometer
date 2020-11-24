@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import os
 from read_data import hist
 from choose_sequences import sequences
+from utils import fit_peak
 
 combine = 1
 relative = False
@@ -27,6 +28,8 @@ def sequence_plot(parameter,ax,amu_min,amu_max,title,legend=True,relative=False)
                             relative, False,new)
         ax.plot(amu, p,color=c,label='{}'.format(i))
         ax.errorbar(amu, p, err, capsize=3, capthick=0.4, ecolor="black", elinewidth=0.4, fmt='none')
+        if parameter == 'baseline':
+            popt = fit_peak(amu, p, ax=ax)
         ax.set_title(title)
         if legend:
             ax.legend()

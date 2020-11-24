@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import os
 
 
-filename='Data2/xenonbaseline_highres.csv'
+filename='Data2/air00.csv'
 df = pd.read_csv(filename, delimiter=";", header=21)
 cycles = max(df.Cycle)
 for i in np.arange(1,8):
