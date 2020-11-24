@@ -1,0 +1,60 @@
+\section{Exercises} \label{app:ex}
+\subsection{Exercise 8.1}
+As a theoretical exercise we had to calculate the partial pressures of a gas mixture with Methane, Nitrogen and Propane. The following peaks have been measured: 
+\begin{itemize}
+    \item $u_{16} = 1.0012$ V on mass 16
+    \item $u_{28} = 0.896$ V on mass 28
+    \item $u_{29} = 0.753$ V on mass 29
+\end{itemize}
+The sensitivities are given as
+\begin{itemize}
+    \item Methane on mass 16: $\sigma_{16} = 10$ V/Torr
+    \item Nitrogen on mass 28: $\sigma_{28} = 15$ V/Torr
+    \item Propane on mass 29: $\sigma_{29} = 5$ V/Torr
+\end{itemize}
+And the following peak ratios are given
+\begin{itemize}
+    \item Methane: $v_{28/16} = 0$, \qquad \quad\;\; $v_{29/16} = 0$
+    \item Nitrogen: $v_{29/28} = 0.00769$,  \quad $v_{16/28} = 0$
+    \item Propane: $v_{28/29} = 0.595$,  \;\qquad $v_{16/29} = 0.0016$
+\end{itemize}
+We calculate:
+\begin{align}
+    p_\text{Methane} &= (u_{16} - v_{16/29}\cdot u_{29})/\sigma_{16}\\
+    p_\text{Nitrogen} &= (u_{28} - v_{28/29}\cdot u_{29} + v_{29/28}\cdot u_{28})/\sigma_{28} \\
+    p_\text{Propane} &= (u_{29} - v_{29/28}\cdot u_{28} + v_{16/29}\cdot u_{29} + v_{28/29}\cdot u_{29})/\sigma_{16}
+\end{align}
+which then yields:
+$$ p_\text{Methane} = 0.1 \;\text{Torr}  \qquad  p_\text{Nitrogen} = 0.0305 \;\text{Torr} \qquad  p_\text{Propane} = 0.2397 \;\text{Torr}$$
+
+\pagebreak
+\subsection{Exercise 8.2}
+For the second exercise we consider a probe with mass $m=7 \,\si{\milli\gram}$ brought back by the Apollo XVII mission. Argon was extracted and the following peak ratios have been determined:
+\begin{itemize}
+    \item $v_{40/36} = 0.98$
+    \item $v_{40/38} = 5.191$
+\end{itemize}
+As a next step $1.415\cdot 10^{-5}$ cc (STP) ordinary Argon found in air has been added and the new peak ratios have been determined:
+\begin{itemize}
+    \item $v_{40/36}' = 7.747$
+    \item $v_{40/38}' = 40.86$
+\end{itemize}
+The blank of the system is given as $10^{-8}$ cc (STP) and the discrimination as $D(36/40)=0.998$.
+To calculate the amount of $^{40}$Ar in cc/g and the true $^{40}$Ar/$^{36}$Ar and $^{40}$Ar/$^{38}$Ar ratios, we first solved the equation system
+\begin{align}
+    v_{40/36}\cdot D(36/40) &= \frac{u_{40} + 0.9966\cdot 10^{-8}}{u_{36} + 0.00337\cdot 10^{-8}}\\
+    v_{40/36}'\cdot D(36/40) &= \frac{u_{40} + 0.9966\cdot(10^{-8} + 1.415 \cdot 10^{-5})}{u_{36} + 0.00337\cdot(10^{-8} + 1.415 \cdot 10^{-5})}
+\end{align}
+which gave us the amount of $^{40}$Ar and $^{36}$Ar in the sample:
+$$ u_{40} = 1.98\cdot10^{-6} \text{cc} \qquad u_{36} = 2.03\cdot10^{-6} \text{cc} $$
+upon solving
+\begin{align}
+    v_{40/38} = \frac{u_{40} + 0.9966\cdot10^{-8}}{u_{38} + 0.00063\cdot10^{-8}}
+\end{align}
+we get
+$$ u_{38} = 3.83\cdot10^{-7} \text{cc} $$
+From that we can calculate the amount of $^{40}$Ar in the sample:
+$$u_{40}/m = 0.00028 \;\text{cc/g}$$
+and the ratios:
+$$^{40}\text{Ar}/^{36}\text{Ar} = 0.97 \qquad ^{40}\text{Ar}/^{38}\text{Ar} = 5.17$$
+
