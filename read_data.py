@@ -81,6 +81,10 @@ def convert_file(filename, average=False):
             i=3
         if filename == 'Data2/xenonbaseline_highres.csv':
             i=3
+        if filename == 'Data2/mix_baseline2':
+            i = 3
+        if filename == 'co2_premature_balloon_loss':
+            i = 0
         df_mean = df[df.Cycle > i].groupby("mass amu").mean()
         df_std = df[df.Cycle > i].groupby("mass amu").std()
         try:
