@@ -8,9 +8,6 @@ from utils import fit_peak
 from nist import get_nist_peaks, nist_aprox
 from gas_analysis import gas_analysis
 
-
-
-
 nist_aprox(*gas_analysis('xenon_highres.csv','xenonbaseline_highres.csv'),'xenon')
 nist_aprox(*gas_analysis('xenonbaseline_highres.csv',False,),'resiudal gas')
 nist_aprox(*gas_analysis('argon2.csv','argonbaseline.csv'),'argon')
