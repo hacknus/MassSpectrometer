@@ -23,17 +23,27 @@ def gas_analysis(file,baseline_file=False):
     for i in np.arange(0,len(amu)-1,10):
         if  err[i]<p[i] and err[i+1]<p[i+1] and err[i-1]<p[i-1]:
             peak=int(np.round(amu[i]))
-            if peak <=10:
-                print('presure = {}'.format(p[i]))
-                print('error = {}'.format(err[i]))
-                print('amu = {}'.format(peak))
-
             if np.array(atom)[-1]!=peak:
                 atom.append(peak)
     atom = np.array(atom)
     amu_min = atom-1.3
     amu_min[0]=0
     amu_max = atom-0.3
+    if file=='xenon_highres.csv':
+        for  i in np.arange(len(atom)):
+            if atom[i]==64: 
+                amu_min[i]+=0.4
+                amu_max[i]+=0.4
+            if atom[i]==65:
+                amu_min[i]+=0.4
+                amu_max[i]+=+0.2
+            if atom[i]==66:
+                amu_min[i]+=0.1
+                amu_max[i]+=-0.2
+            if atom[i]==128:
+                amu_min[i]+=0
+                amu_max[i]+=-0.3
+        
     
     integr_p = []
     integr_p_err = []
