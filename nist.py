@@ -22,12 +22,8 @@ def get_nist_peaks(name, p_number=1):
     n = n[:p_number]
     return n
 
-<<<<<<< HEAD
-def scale_nist(atom,integr_p,gas,number=12):
-=======
-
 def scale_nist(atom, integr_p, gas, number=12):
->>>>>>> 202ac3ab2ceb119e8e6fc80624c1a0e57aaed4bc
+
     if gas == 'h2':
         amu = np.array([1, 2])
         p = np.array([2, 100])
