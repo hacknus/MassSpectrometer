@@ -15,6 +15,6 @@ nist_aprox(*gas_analysis('xenon_highres.csv','xenonbaseline_highres.csv'),'xenon
 nist_aprox(*gas_analysis('xenonbaseline_highres.csv',False,),'resiudal gas')
 nist_aprox(*gas_analysis('argon2.csv','argonbaseline.csv'),'argon')
 nist_aprox(*gas_analysis('mix2.csv','mix_baseline2.csv'),'mix')
-nist_aprox(*gas_analysis('co2_premature_balloon_loss.csv','co2baseline.csv'),r'$CO_2$')
+nist_aprox(*gas_analysis('co2_premature_balloon_loss.csv','co2baseline.csv'),r'$CO_2$',True)
 nist_aprox(*gas_analysis('deo.csv','airbaseline.csv'),'Deo')
 nist_aprox(*gas_analysis('ethanol.csv','co2baseline.csv'),'Ethanol',True)
