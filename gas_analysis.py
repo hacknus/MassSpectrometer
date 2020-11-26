@@ -24,28 +24,42 @@ def gas_analysis(file,baseline_file=False):
         if amu[i] < 50:
             if  err[i]<p[i] and err[i+1]<p[i+1] and err[i-1]<p[i-1]:
                 peak=int(np.round(amu[i]))
-                if np.array(atom)[-1]!=peak:
+                if np.array(atom)[-1] < peak:
                     atom.append(peak)
+                   
                   
               
         if amu[i] > 50:                                                     #amu verschiebt sich leicht, daher korrektur
             if  err[i]<p[i] and err[i+1]<p[i+1] and err[i+2]<p[i+2]:
                 peak=int(np.round(amu[i]))
-                if np.array(atom)[-1]!=peak:
+                if np.array(atom)[-1] < peak:
                     atom.append(peak)
+                    if peak == 64:
+                        atom.append(64.5)
+                    if peak == 65:
+                        atom.append(65.5)
                  
     atom = np.array(atom)
     amu_min = atom-1.3
     amu_min[0]=0
     amu_max = atom-0.3
-    if file=='xenon_highres.csv':
-        for  i in np.arange(len(atom)):
+    if max(amu) >60:
+        for  i in np.arange(len(atom+2)):
             if atom[i]==64: 
-                amu_min[i]+=0.4
-                amu_max[i]+=0.4
+                amu_min[i]+=+0.1
+                amu_max[i]+=-0.7
+            if atom[i]==64.5: 
+                amu_min[i]+=0.25
+                amu_max[i]-=0.25
+            
             if atom[i]==65:
-                amu_min[i]+=0.4
-                amu_max[i]+=+0.2
+                amu_min[i]+=+0.25
+                amu_max[i]+=-0.55
+                
+            if atom[i]==65.5: 
+                amu_min[i]+=0.25
+                amu_max[i]-=0.25
+                
             if atom[i]==66:
                 amu_min[i]+=0.1
                 amu_max[i]+=-0.2
@@ -60,6 +74,10 @@ def gas_analysis(file,baseline_file=False):
 
     #Gaus fit over selected peaks
     for i,j,k in zip(amu_min,amu_max,atom):
+        #if k == 64 and file == 'xenon_highres.csv':
+        #    integr_p.append(0)
+        #    integr_p_err.append(0)
+        #    continue
         fig, ax = plt.subplots(1, 1)
         amu, p, err = sequences(file, baseline_file, combine, i, j, relative,plot=False,new= True)
         ax.plot(amu,p)

@@ -39,8 +39,6 @@ def scale_nist(atom, integr_p, gas, number=12):
 
 
 def nist_aprox(atom, integr_p, integr_p_err, plot_name, ethanol=False):
-    # scale nist data
-#    amu_co2, p_co2_scaled = scale_nist(atom, integr_p, 'co2')
     amu_o2, p_o2_scaled = scale_nist(atom, integr_p, 'oxygen')
     p_o2_0 = p_o2_scaled
     amu_argon, p_argon_scaled = scale_nist(atom, integr_p, 'argon')
@@ -48,7 +46,7 @@ def nist_aprox(atom, integr_p, integr_p_err, plot_name, ethanol=False):
     amu_krypton, p_krypton_scaled = scale_nist(atom, integr_p, 'krypton')
     amu_h2o, p_h2o_scaled = scale_nist(atom, integr_p, 'water')
     p_h2o_0 = p_h2o_scaled
-    amu_h2, p_h2_scaled = scale_nist(atom, integr_p, 'h2')
+    amu_h2, p_h2_scaled = scale_nist(atom, integr_p, 'hydrogen')
     amu_ethanol, p_ethanol_scaled = scale_nist(atom, integr_p, 'ethanol')
     p_ethanol_0 = p_ethanol_scaled
 
@@ -62,7 +60,7 @@ def nist_aprox(atom, integr_p, integr_p_err, plot_name, ethanol=False):
     amu_butane = np.array(n_butane.m)
     p_butane = np.array(n_butane.y)
     
-    print(atom)
+
     if 29 and 43 in atom:
         for i in np.arange(len(atom)):
             if atom[i] == 29:
@@ -172,7 +170,15 @@ def nist_aprox(atom, integr_p, integr_p_err, plot_name, ethanol=False):
         if i in amu_co2:
             p_o2_scaled[amu_o2 == i] = p_o2_scaled[amu_o2 == i] + p_co2_scaled[amu_co2 == i]
 
-    # plot bars
+#delet half masses:
+    if 64.5 in atom:
+        integr_p[atom==64.5] = 0
+        integr_p_err[atom==64.5] = 0
+    if 64.5 in atom:
+        integr_p[atom==65.5] = 0
+        integr_p_err[atom==65.5] = 0
+
+# plot bars
     width = 0.9
     fig, ax = plt.subplots(1, 1)
     ax.set_title(plot_name)
