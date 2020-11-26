@@ -40,7 +40,7 @@ def scale_nist(atom, integr_p, gas, number=12):
 
 def nist_aprox(atom, integr_p, integr_p_err, plot_name, ethanol=False):
     # scale nist data
-    amu_co2, p_co2_scaled = scale_nist(atom, integr_p, 'co2')
+#    amu_co2, p_co2_scaled = scale_nist(atom, integr_p, 'co2')
     amu_o2, p_o2_scaled = scale_nist(atom, integr_p, 'oxygen')
     p_o2_0 = p_o2_scaled
     amu_argon, p_argon_scaled = scale_nist(atom, integr_p, 'argon')
@@ -48,38 +48,77 @@ def nist_aprox(atom, integr_p, integr_p_err, plot_name, ethanol=False):
     amu_krypton, p_krypton_scaled = scale_nist(atom, integr_p, 'krypton')
     amu_h2o, p_h2o_scaled = scale_nist(atom, integr_p, 'water')
     p_h2o_0 = p_h2o_scaled
-    amu_butane, p_butane_scaled = scale_nist(atom, integr_p, 'butane')
-    p_butane_0 = p_butane_scaled
     amu_h2, p_h2_scaled = scale_nist(atom, integr_p, 'h2')
     amu_ethanol, p_ethanol_scaled = scale_nist(atom, integr_p, 'ethanol')
     p_ethanol_0 = p_ethanol_scaled
 
-    if ethanol:
-        p_butane_scaled = np.zeros(len(p_butane_scaled))
-        p_butane_0 = p_butane_scaled
-
+# cupled par (propane and butane)
     n_propane = get_nist_peaks("propane", p_number=6)
     amu_propane = np.array(n_propane.m)
     p_propane = np.array(n_propane.y)
-    if 29 in atom:
-        p_propane_scaled = (integr_p[atom == 29] - p_butane_scaled[amu_butane == 29]) / p_propane[
-            amu_propane == 29] * p_propane
+
+    
+    n_butane = get_nist_peaks("butane", p_number=6)
+    amu_butane = np.array(n_butane.m)
+    p_butane = np.array(n_butane.y)
+    
+    print(atom)
+    if 29 and 43 in atom:
+        for i in np.arange(len(atom)):
+            if atom[i] == 29:
+                p29=integr_p[i]
+            if atom[i] == 43:
+                p43=integr_p[i]
+        for i in np.arange(len(amu_butane)):
+            if amu_butane[i] == 43:
+                but43 = p_butane[i]
+            if amu_butane[i] == 29:
+                but29 = p_butane[i]
+        for i in np.arange(len(amu_propane)):
+            if amu_propane[i] == 43:
+                pro43 = p_propane[i]
+            if amu_propane[i] == 29:
+                pro29 = p_propane[i]
+        k_propane = (p29 - p43 / but43 * but29) / (pro29 - pro43/but43*but29) 
+        k_butane = (p43 - k_propane * pro43)/ but43      
+        p_propane_scaled = k_propane * p_propane
+        p_butane_scaled = k_butane * p_butane
+
+    
+
     else:
         p_propane_scaled = np.zeros(len(amu_propane), int)
-    p_propane_0 = p_propane_scaled
+        p_butane_scaled = np.zeros(len(amu_butane), int)
+    
     if ethanol:
-        p_propane_scaled = np.zeros(len(p_propane_scaled))
-        p_propane_0 = p_propane_scaled
+        p_propane_scaled = np.zeros(len(amu_propane), int)
+        p_butane_scaled = np.zeros(len(amu_butane), int)
+    
+    p_butane_0 = p_butane_scaled
+    p_propane_0 = p_propane_scaled
 
+#dependent maxima for co2
+    n_co2 = get_nist_peaks("co2", p_number=6)
+    amu_co2 = np.array(n_co2.m)
+    p_co2 = np.array(n_co2.y)
+    if 44 in atom:
+        p_co2_scaled = (integr_p[atom == 44] - p_propane_scaled[amu_propane == 44]) / p_co2[amu_co2 == 44] * p_co2
+    else:
+        p_co2_scaled = np.zeros(len(amu_co2), int)
+    p_co2_0 = p_co2_scaled
+
+#dependent maxima for nitrogen 
     n_n2 = get_nist_peaks("nitrogen", p_number=6)
     amu_n2 = np.array(n_n2.m)
     p_n2 = np.array(n_n2.y)
     if 28 in atom:
         p_n2_scaled = (integr_p[atom == 28] - p_co2_scaled[amu_co2 == 28] - p_butane_scaled[amu_butane == 28] -
-                       p_propane_scaled[amu_propane == 28]) / p_n2[amu_n2 == 28] * p_n2
+                       p_propane_scaled[amu_propane == 28] - p_ethanol_scaled[amu_ethanol == 28]) / p_n2[amu_n2 == 28] * p_n2
     else:
         p_n2_scaled = np.zeros(len(amu_n2), int)
     p_n2_0 = p_n2_scaled
+    
+
 
     # make sum of the bars
     if ethanol != True:

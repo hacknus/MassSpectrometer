@@ -21,10 +21,19 @@ def gas_analysis(file,baseline_file=False):
     plt.show
     atom=[1]
     for i in np.arange(0,len(amu)-1,10):
-        if  err[i]<p[i] and err[i+1]<p[i+1] and err[i-1]<p[i-1]:
-            peak=int(np.round(amu[i]))
-            if np.array(atom)[-1]!=peak:
-                atom.append(peak)
+        if amu[i] < 50:
+            if  err[i]<p[i] and err[i+1]<p[i+1] and err[i-1]<p[i-1]:
+                peak=int(np.round(amu[i]))
+                if np.array(atom)[-1]!=peak:
+                    atom.append(peak)
+                  
+              
+        if amu[i] > 50:                                                     #amu verschiebt sich leicht, daher korrektur
+            if  err[i]<p[i] and err[i+1]<p[i+1] and err[i+2]<p[i+2]:
+                peak=int(np.round(amu[i]))
+                if np.array(atom)[-1]!=peak:
+                    atom.append(peak)
+                 
     atom = np.array(atom)
     amu_min = atom-1.3
     amu_min[0]=0
@@ -43,8 +52,9 @@ def gas_analysis(file,baseline_file=False):
             if atom[i]==128:
                 amu_min[i]+=0
                 amu_max[i]+=-0.3
-        
-    
+            if atom[i]==98:
+                amu_min[i]+=0.2
+                amu_max[i]+=-0.4
     integr_p = []
     integr_p_err = []
 
@@ -61,8 +71,11 @@ def gas_analysis(file,baseline_file=False):
         plt.tight_layout()
         popt, pcov = fit_peak(amu, p, ax=ax)
         plt.show()
-        integr_p.append(popt[0]*popt[1]*np.sqrt(2*np.pi))
-        integr_p_err.append(np.sqrt(2*np.pi*(popt[0]**2*pcov[1][1]+popt[1]**2*pcov[0][0])))
+        if popt[2] > 0.4:
+            popt[0] = 0
+            pcov[0][0] = 0
+        integr_p.append(popt[0]*abs(popt[2])*np.sqrt(2*np.pi))
+        integr_p_err.append(np.sqrt(2*np.pi*(popt[0]**2*pcov[2][2]+popt[2]**2*pcov[0][0])))
     integr_p=np.array(integr_p)
     integr_p_err= np.array(integr_p_err)
     
