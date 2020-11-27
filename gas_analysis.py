@@ -19,6 +19,7 @@ def gas_analysis(file,baseline_file=False):
     amu, p, err = sequences(file, baseline_file, combine, amu_min, amu_max,relative, False,new=True)
     plt.plot(amu,p)
     plt.show
+    
     atom=[1]
     for i in np.arange(0,len(amu)-1,10):
         if amu[i] < 50:
@@ -36,25 +37,30 @@ def gas_analysis(file,baseline_file=False):
                     atom.append(peak)
                     if peak == 64:
                         atom.append(64.5)
+                        p64 = p[i]
+                        p64_err = err[i]
                     if peak == 65:
                         atom.append(65.5)
-                 
+                        p65 = p[i]
+                        p65_err = err[i]  
+                        print(p64_err)
+                        print(p65_err)
     atom = np.array(atom)
     amu_min = atom-1.3
     amu_min[0]=0
     amu_max = atom-0.3
     if max(amu) >60:
         for  i in np.arange(len(atom+2)):
-            if atom[i]==64: 
-                amu_min[i]+=+0.1
-                amu_max[i]+=-0.7
+#            if atom[i]==64: 
+#                amu_min[i]+=+0.1
+#                amu_max[i]+=-0.7
             if atom[i]==64.5: 
                 amu_min[i]+=0.25
                 amu_max[i]-=0.25
             
-            if atom[i]==65:
-                amu_min[i]+=+0.25
-                amu_max[i]+=-0.55
+#            if atom[i]==65:
+#                amu_min[i]+=+0.25
+#                amu_max[i]+=-0.55
                 
             if atom[i]==65.5: 
                 amu_min[i]+=0.25
@@ -73,11 +79,19 @@ def gas_analysis(file,baseline_file=False):
     integr_p_err = []
 
     #Gaus fit over selected peaks
+    sigma = 0.2
+    sigma_err_2 = 0.1**2
+    #p64_err=0
+    #p65_err=0
     for i,j,k in zip(amu_min,amu_max,atom):
-        #if k == 64 and file == 'xenon_highres.csv':
-        #    integr_p.append(0)
-        #    integr_p_err.append(0)
-        #    continue
+        if k == 64:
+            integr_p.append(np.sqrt(2*np.pi)*p64*sigma)            
+            integr_p_err.append(np.sqrt(2*np.pi*(p64**2*sigma_err_2+sigma**2*p64_err**2)))
+            continue
+        if k == 65:
+            integr_p.append(np.sqrt(2*np.pi)*p65*sigma)            
+            integr_p_err.append(np.sqrt(2*np.pi*(p65**2*sigma_err_2+sigma**2*p65_err**2)))
+            continue
         fig, ax = plt.subplots(1, 1)
         amu, p, err = sequences(file, baseline_file, combine, i, j, relative,plot=False,new= True)
         ax.plot(amu,p)

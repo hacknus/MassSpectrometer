@@ -2,7 +2,9 @@ from jcamp import JCAMP_reader
 import pandas as pd
 import numpy as np
 import pandas as pd
+import matplotlib
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 from read_data import hist
 from choose_sequences import sequences
 from voltage_variation import double_plot, sequence_plot
@@ -212,10 +214,12 @@ def nist_aprox(atom, integr_p, integr_p_err, plot_name, ethanol=False):
 
     ax.set_ylabel(r"$p$ [Torr]")
     ax.set_xlabel("amu")
-    if max(atom) < 50:
-        ax.set_xticks(np.arange(0, max(atom) + 1, 2))
-    if max(atom) > 50:
+    if max(atom) < 60:
+        ax.set_xticks(np.arange(0, max(atom) + 1, 5))
+    if max(atom) > 60:
         ax.set_xticks(np.arange(0, max(atom) + 1, 10))
+    ax.xaxis.set_minor_locator(ticker.MultipleLocator(1))
+    
     plt.savefig("Report/DataResultsPlots/{}.pdf".format(plot_name))
     plt.show()
 
