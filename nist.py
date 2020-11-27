@@ -24,32 +24,29 @@ def get_nist_peaks(name, p_number=1):
     n = n[:p_number]
     return n
 
-def scale_nist(atom, integr_p, gas, number=12):
-
-    if gas == 'h2':
-        amu = np.array([1, 2])
-        p = np.array([2, 100])
-    else:
-        nist = get_nist_peaks(gas, p_number=number)
-        amu = np.array(nist.m)
-        p = np.array(nist.y)
+def scale_nist(atom, integr_p, integr_p_err, gas, number=12):
+    nist = get_nist_peaks(gas, p_number=number)
+    amu = np.array(nist.m)
+    p = np.array(nist.y)
     amu_max = amu[max(p) == p]
     if max(amu_max) in atom:
-        return amu, integr_p[atom == amu_max] / p[amu == amu_max] * p
+        scaled = integr_p[atom == amu_max] / p[amu == amu_max] * p
+        scaled_err = p/ p[amu == amu_max]*integr_p_err  
+        return amu, scaled, scaled_err
     else:
-        return amu, np.zeros(len(amu), int)
+        return amu, np.zeros(len(amu), int), np.zeros(len(amu), int)
 
 
 def nist_aprox(atom, integr_p, integr_p_err, plot_name, ethanol=False):
-    amu_o2, p_o2_scaled = scale_nist(atom, integr_p, 'oxygen')
+    amu_o2, p_o2_scaled, p_o2_scaled_err  = scale_nist(atom, integr_p,integr_p_err, 'oxygen')
     p_o2_0 = p_o2_scaled
-    amu_argon, p_argon_scaled = scale_nist(atom, integr_p, 'argon')
-    amu_xenon, p_xenon_scaled = scale_nist(atom, integr_p, 'xenon')
-    amu_krypton, p_krypton_scaled = scale_nist(atom, integr_p, 'krypton')
-    amu_h2o, p_h2o_scaled = scale_nist(atom, integr_p, 'water')
+    amu_argon, p_argon_scaled ,p_argon_scaled_err = scale_nist(atom, integr_p, integr_p_err, 'argon')
+    amu_xenon, p_xenon_scaled, p_xenon_scaled_err = scale_nist(atom, integr_p,  integr_p_err,'xenon')
+    amu_krypton, p_krypton_scaled, p_krypton_scaled_err = scale_nist(atom, integr_p,  integr_p_err,'krypton')
+    amu_h2o, p_h2o_scaled , p_h2o_scaled_err= scale_nist(atom, integr_p,  integr_p_err,'water')
     p_h2o_0 = p_h2o_scaled
-    amu_h2, p_h2_scaled = scale_nist(atom, integr_p, 'hydrogen')
-    amu_ethanol, p_ethanol_scaled = scale_nist(atom, integr_p, 'ethanol')
+    amu_h2, p_h2_scaled, ph2_scaled_err = scale_nist(atom, integr_p, integr_p_err, 'hydrogen')
+    amu_ethanol, p_ethanol_scaled, p_ethanol_scaled_err= scale_nist(atom, integr_p,  integr_p_err,'ethanol')
     p_ethanol_0 = p_ethanol_scaled
 
 # cupled par (propane and butane)
@@ -67,8 +64,10 @@ def nist_aprox(atom, integr_p, integr_p_err, plot_name, ethanol=False):
         for i in np.arange(len(atom)):
             if atom[i] == 29:
                 p29=integr_p[i]
+                p29_err = integr_p_err[i]
             if atom[i] == 43:
                 p43=integr_p[i]
+                p43_err = integr_p_err[i]
         for i in np.arange(len(amu_butane)):
             if amu_butane[i] == 43:
                 but43 = p_butane[i]
@@ -79,21 +78,30 @@ def nist_aprox(atom, integr_p, integr_p_err, plot_name, ethanol=False):
                 pro43 = p_propane[i]
             if amu_propane[i] == 29:
                 pro29 = p_propane[i]
+
         k_propane = (p29 - p43 / but43 * but29) / (pro29 - pro43/but43*but29) 
-        k_butane = (p43 - k_propane * pro43)/ but43      
+        k_propane_err = np.sqrt((p29_err / (pro29 - pro43/but43*but29))**2 + ((p43_err/ but43 * but29) / (pro29 - pro43/but43*but29))**2) 
+        k_butane = (p43 - k_propane * pro43)/ but43     
+        k_butane_err = np.sqrt((p43_err / but43)**2 + ((k_propane_err * pro43)/but43)**2)
         p_propane_scaled = k_propane * p_propane
+        p_propane_scaled_err = k_propane_err * p_propane
         p_butane_scaled = k_butane * p_butane
+        p_butane_scaled_err = k_butane_err * p_butane
+        
 
     
 
     else:
         p_propane_scaled = np.zeros(len(amu_propane), int)
         p_butane_scaled = np.zeros(len(amu_butane), int)
+        p_propane_scaled_err = np.zeros(len(amu_propane), int)
+        p_butane_scaled_err = np.zeros(len(amu_butane), int)
     
     if ethanol:
         p_propane_scaled = np.zeros(len(amu_propane), int)
         p_butane_scaled = np.zeros(len(amu_butane), int)
-    
+        p_propane_scaled_err = np.zeros(len(amu_propane), int)
+        p_butane_scaled_err = np.zeros(len(amu_butane), int)
     p_butane_0 = p_butane_scaled
     p_propane_0 = p_propane_scaled
 
@@ -103,6 +111,7 @@ def nist_aprox(atom, integr_p, integr_p_err, plot_name, ethanol=False):
     p_co2 = np.array(n_co2.y)
     if 44 in atom:
         p_co2_scaled = (integr_p[atom == 44] - p_propane_scaled[amu_propane == 44]) / p_co2[amu_co2 == 44] * p_co2
+        p_co2_scaled_err = np.sqrt((integr_p_err[atom == 44]/p_co2[amu_co2 == 44] * p_co2)**2 + (p_propane_scaled_err[amu_propane == 44] / p_co2[amu_co2 == 44] * p_co2)**2)
     else:
         p_co2_scaled = np.zeros(len(amu_co2), int)
     p_co2_0 = p_co2_scaled
@@ -114,8 +123,10 @@ def nist_aprox(atom, integr_p, integr_p_err, plot_name, ethanol=False):
     if 28 in atom:
         p_n2_scaled = (integr_p[atom == 28] - p_co2_scaled[amu_co2 == 28] - p_butane_scaled[amu_butane == 28] -
                        p_propane_scaled[amu_propane == 28] - p_ethanol_scaled[amu_ethanol == 28]) / p_n2[amu_n2 == 28] * p_n2
+        p_n2_scaled_err = np.sqrt(integr_p_err[atom == 28]**2 + p_co2_scale_errd[amu_co2 == 28]**2 + p_butane_scaled_err[amu_butane == 28]**2 + p_propane_scaled_err[amu_propane == 28]**2 + p_ethanol_scaled[amu_ethanol == 28]**2) / p_n2[amu_n2 == 28] * p_n2
     else:
         p_n2_scaled = np.zeros(len(amu_n2), int)
+        p_n2_scaled_err = np.zeros(len(amu_n2), int)
     p_n2_0 = p_n2_scaled
     
 
