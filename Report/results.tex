@@ -21,6 +21,7 @@
     
     In summary, the parameters are optimal if $\Delta m = 20\%$, \texttt{res} = 0\%, $U$ = 50~V and the faraday detector is selected. 
     
+    \newpage
     \subsection{Residual gas Identification}
     \subsection{Noble Gas Analysis}
     \begin{figure}[h!]
@@ -30,14 +31,29 @@
     \label{fig:noblegas}
     \end{figure}
     
+    \newpage
     \subsection{Inhaled Air}
-    \begin{figure}
+    To compare the amount of carbon-dioxide and oxygen in exhaled air, one of us exhaled air into a balloon, attached it to the system and performed a measurement. Afterwards, one of us inhaled the air again and exhaled it again into the balloon. We repeated this procedure 5 times. The peaks of carbon dioxide and oxygen were fitted using a {\scshape Gaussian} as described in section \ref{sec:fit}. The integrated data is normalised over the total data-set and is shown with uncertainties in figure \ref{fig:air}. 
+    \begin{figure}[h!]
         \centering
-        \includegraphics[width=\textwidth]{Report/DataResultsPlots/air.pdf}
+        \includegraphics[width=0.7\textwidth]{Report/DataResultsPlots/air.pdf}
         \caption{CO$_2$ and O$_2$ amount in Inhaled air.}
         \label{fig:air}
     \end{figure}
-    
+    To get an estimation of how much oxygen is actually converted into carbon dioxide we fit \eqref{eq:breath} to the oxygen set and \eqref{eq:breath2} to the carbon dioxide set.
+    \begin{align}
+        f_{\text{O}_2}(n) &= n_{\text{O}_2} \cdot p_{\text{O}_2}^n \label{eq:breath}\\
+        f_{\text{CO}_2}(n) &= n_{\text{CO}_2} - n_{\text{CO}_2} \cdot p_{\text{CO}_2}^n \label{eq:breath2}
+    \end{align}
+    We thus received the initial value of oxygen:
+    $$ n_{\text{O}_2} = (1.58 \pm 0.16) \%$$
+    And the stationary value of carbon dioxide:
+    $$ n_{\text{CO}_2} = (0.69 \pm 0.21) \%$$
+    Theoretically the factors $p_{\text{O}_2}$ and $p_{\text{CO}_2}$ should be identical because the conversion ratio is 1:1. However, because our mass-spectrometer cannot relatively measure the amount correctly because not all elements are equally well ionized. The factors $p_i$ we received from the fit are:
+    $$p_{\text{O}_2} = (81.91 \pm 2.47) \%\;\text{per breath}$$
+    $$p_{\text{CO}_2} = (53.29 \pm 23.24) \%\;\text{per breath}$$
+    In reality, the oxygen amount decreases by about 4 to 5 \% per breath \cite{breath}.\\
+    In figure \ref{fig:air} we also notice that the error-bars on the oxygen measurements are significantly larger than the ones for the carbon-dioxide measurements. This is another indication that the system has not the same sensitivity for both elements.
     
     
     \subsection{Measurement of Ethanol}
