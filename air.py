@@ -11,7 +11,7 @@ def oxygen(n, n0, p):
 
 
 def carbondioxide(n, n0, p):
-    return n0 - n0 * p ** n
+    return n0 * (1 - p ** n)
 
 
 relative = False
@@ -41,7 +41,7 @@ for i, c in zip(breath, colors):
     co2.append(np.sqrt(2 * np.pi) * popt[0] * popt[2])
     co2err.append(2 * np.pi * np.sqrt(popt[0] ** 2 * pcov[2][2] + popt[2] ** 2 * pcov[0][0]))
 
-    ax.bar(amu, p, color=c, width=0.1, edgecolor="black", label="air measurement", alpha=0.5)
+    ax.bar(amu, p, color=c, width=0.1, edgecolor="black", label=f"air measurement {i}", alpha=0.5)
     ax.errorbar(amu, p, err, capsize=3, capthick=0.4, ecolor="black", elinewidth=0.4, fmt='none')
     s = np.sum(p)
     co2[-1] /= s
@@ -50,25 +50,25 @@ for i, c in zip(breath, colors):
     o2err[-1] /= s
     # plt.xlim(30, 50)
     # plt.semilogy()
-    plt.ylim(1e-9, 3e-7)
-    plt.xlim(41.5, 46.5)
-    plt.xticks(range(42, 47))
-    plt.legend()
-    plt.ylabel(r"$p$ [Torr]")
-    plt.xlabel(r"$m$ [amu]")
-    plt.savefig("Report/DataResultsPlots/peak.pdf")
-    plt.show()
-    exit()
+plt.ylim(1e-9, 3e-7)
+plt.xlim(41.5, 46.5)
+plt.xticks(range(42, 47))
+plt.legend()
+plt.ylabel(r"$p$ [Torr]")
+plt.xlabel(r"$m$ [amu]")
+plt.savefig("Report/DataResultsPlots/peak.pdf")
+plt.show()
+# exit()
 
 popt, pcov = curve_fit(oxygen, np.arange(1, 6), o2, sigma=o2err)
 n = np.linspace(0, 6, 100)
-print(f"a = {100 * popt[1]:.4f} +/- {100 * np.sqrt(pcov[1][1]):.4f}")
+print(f"a = {popt[1]:.4f} +/- {np.sqrt(pcov[1][1]):.4f}")
 print(f"n0 = {100 * popt[0]:.4f} +/- {100 * np.sqrt(pcov[0][0]):.4f}")
 plt.plot(n, 100 * oxygen(n, *popt), ls="--", color="red")
 
 popt, pcov = curve_fit(carbondioxide, np.arange(1, 6), co2, sigma=co2err, p0=popt)
 n = np.linspace(0, 6, 100)
-print(f"a = {100 * popt[1]:.4f} +/- {100 * np.sqrt(pcov[1][1]):.4f}")
+print(f"a = {popt[1]:.4f} +/- {np.sqrt(pcov[1][1]):.4f}")
 print(f"n0 = {100 * popt[0]:.4f} +/- {100 * np.sqrt(pcov[0][0]):.4f}")
 plt.plot(n, 100 * carbondioxide(n, *popt), ls="--", color="blue")
 
