@@ -41,7 +41,8 @@ for i, c in zip(breath, colors):
     co2.append(np.sqrt(2 * np.pi) * popt[0] * popt[2])
     co2err.append(2 * np.pi * np.sqrt(popt[0] ** 2 * pcov[2][2] + popt[2] ** 2 * pcov[0][0]))
 
-    ax.bar(amu, p, color=c, width=0.1, label="dataset",alpha=0.5)
+    ax.bar(amu, p, color=c, width=0.1, edgecolor="black", label="air measurement", alpha=0.5)
+    ax.errorbar(amu, p, err, capsize=3, capthick=0.4, ecolor="black", elinewidth=0.4, fmt='none')
     s = np.sum(p)
     co2[-1] /= s
     o2[-1] /= s
@@ -49,9 +50,12 @@ for i, c in zip(breath, colors):
     o2err[-1] /= s
     # plt.xlim(30, 50)
     # plt.semilogy()
-    plt.ylim(1e-9, 4e-7)
-    plt.xlim(42, 46)
+    plt.ylim(1e-9, 3e-7)
+    plt.xlim(41.5, 46.5)
+    plt.xticks(range(42, 47))
     plt.legend()
+    plt.ylabel(r"$p$ [Torr]")
+    plt.xlabel(r"$m$ [amu]")
     plt.savefig("Report/DataResultsPlots/peak.pdf")
     plt.show()
     exit()
