@@ -13,6 +13,17 @@ For Xenon the peaks at $m=132$ amu and $m=131$ amu and $m=129$ overlap, thus a s
     f(x) = A_1\cdot e^{-\frac{(x-\mu)^2}{2\sigma_1^2}} + A_2\cdot e^{-\frac{(x-\mu - 1)^2}{2\sigma_2^2}} + A_3\cdot e^{-\frac{(x-\mu-3)^2}{2\sigma_3^2}} \label{eq:gaussxe}
 \end{align}
 The fit-function also provides us with the covariance-matrix for the parameters.
+An example is shown in figure \ref{fig:gauss_int}. In order to get the amount of the measured compound we have to calculate the area of the fit. If we just summed up the bins from $\mu-3\sigma$ to $\mu+3\sigma$, but then we also include the noise. The area can directly be calculated from the {\scshape Gaussian} as given in \eqref{eq:gauss_int}.
+\begin{align}
+    \int_{-\infty}^{+\infty} A\cdot e^{-\frac{(x-\mu)^2}{2\sigma^2}} \mathrm{d}x = \sqrt{2\pi}A\sigma \label{eq:gauss_int} 
+\end{align}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.6\textwidth]{}
+    \caption{An example of our fit applied to a dataset gathered during this experiment.}
+    \label{fig:gauss_int}
+\end{figure}
+
 
 \subsection{Calibration}
 Upon looking at the fit Peaks for Argon and Xenon, we noticed that there was a slight deviation from the expected values. We thus had to calibrate the measurement of the detector with this two datasets. Equation \eqref{eq:calibrate} was applied to all gathered data in order to calibrate the $m$ axis.
