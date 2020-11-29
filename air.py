@@ -58,6 +58,8 @@ plt.ylabel(r"$p$ [Torr]")
 plt.xlabel(r"$m$ [amu]")
 plt.savefig("Report/DataResultsPlots/peak.pdf")
 plt.show()
+plt.cla()
+plt.clf()
 # exit()
 
 popt, pcov = curve_fit(oxygen, np.arange(1, 6), o2, sigma=o2err)
