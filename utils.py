@@ -29,6 +29,7 @@ def fit_peak(m, p, err=None, m1=None, m2=None, ax=None):
     if ax:
         m_lin = np.linspace(m[0], m[-1], 1000)
         ax.plot(m_lin, gauss(m_lin, *popt), ls="--", color="red")
+        ax.fill_between(m_lin,gauss(m_lin, *popt),0,color="red",alpha=0.5)
     return popt, pcov
 
 

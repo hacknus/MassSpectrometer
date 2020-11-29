@@ -34,35 +34,38 @@ for i, c in zip(breath, colors):
 
     popt, pcov = fit_peak(amu, p, err, m1=30, m2=34, ax=ax)
     a, a_err = quad(gauss, popt[1] - 3 * popt[2], popt[1] + 3 * popt[2], args=tuple(popt))
-    o2.append(np.sqrt(2 * np.pi)*popt[0]*popt[2])
+    o2.append(np.sqrt(2 * np.pi) * popt[0] * popt[2])
     o2err.append(2 * np.pi * np.sqrt(popt[0] ** 2 * pcov[2][2] + popt[2] ** 2 * pcov[0][0]))
     popt, pcov = fit_peak(amu, p, err, m1=42, m2=46, ax=ax)
     a, a_err = quad(gauss, popt[1] - 3 * popt[2], popt[1] + 3 * popt[2], args=tuple(popt))
-    co2.append(np.sqrt(2 * np.pi)*popt[0]*popt[2])
+    co2.append(np.sqrt(2 * np.pi) * popt[0] * popt[2])
     co2err.append(2 * np.pi * np.sqrt(popt[0] ** 2 * pcov[2][2] + popt[2] ** 2 * pcov[0][0]))
 
-    ax.plot(amu, p, color=c, label=f"breath {i}")
+    ax.bar(amu, p, color=c, width=0.1, label="dataset",alpha=0.5)
     s = np.sum(p)
     co2[-1] /= s
     o2[-1] /= s
     co2err[-1] /= s
     o2err[-1] /= s
-# plt.xlim(30, 50)
-plt.semilogy()
-plt.ylim(1e-9, 1e-5)
-plt.legend()
-plt.show()
+    # plt.xlim(30, 50)
+    # plt.semilogy()
+    plt.ylim(1e-9, 4e-7)
+    plt.xlim(42, 46)
+    plt.legend()
+    plt.savefig("Report/DataResultsPlots/peak.pdf")
+    plt.show()
+    exit()
 
 popt, pcov = curve_fit(oxygen, np.arange(1, 6), o2, sigma=o2err)
 n = np.linspace(0, 6, 100)
-print(f"a = {100*popt[1]:.4f} +/- {100*np.sqrt(pcov[1][1]):.4f}")
-print(f"n0 = {100*popt[0]:.4f} +/- {100*np.sqrt(pcov[0][0]):.4f}")
+print(f"a = {100 * popt[1]:.4f} +/- {100 * np.sqrt(pcov[1][1]):.4f}")
+print(f"n0 = {100 * popt[0]:.4f} +/- {100 * np.sqrt(pcov[0][0]):.4f}")
 plt.plot(n, 100 * oxygen(n, *popt), ls="--", color="red")
 
-popt, pcov = curve_fit(carbondioxide, np.arange(1, 6), co2, sigma=co2err ,p0=popt)
+popt, pcov = curve_fit(carbondioxide, np.arange(1, 6), co2, sigma=co2err, p0=popt)
 n = np.linspace(0, 6, 100)
-print(f"a = {100*popt[1]:.4f} +/- {100*np.sqrt(pcov[1][1]):.4f}")
-print(f"n0 = {100*popt[0]:.4f} +/- {100*np.sqrt(pcov[0][0]):.4f}")
+print(f"a = {100 * popt[1]:.4f} +/- {100 * np.sqrt(pcov[1][1]):.4f}")
+print(f"n0 = {100 * popt[0]:.4f} +/- {100 * np.sqrt(pcov[0][0]):.4f}")
 plt.plot(n, 100 * carbondioxide(n, *popt), ls="--", color="blue")
 
 plt.errorbar(np.arange(1, 6), 100 * np.array(co2), np.array(co2err) * 100, color="blue", capsize=3, capthick=0.4,
