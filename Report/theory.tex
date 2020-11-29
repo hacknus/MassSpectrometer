@@ -1,5 +1,75 @@
 \section{Theory} \label{sec:theory}
-Mass-spectrometers are used to measure the amounts of different compounds in a gas. The gas is first ionized and then the different compounds are split up according to their charge-to-mass ratio. In this experiment we used a quadrupol-mass-spectrometer.
+Mass-spectrometers are used to measure the amounts of different compounds in a gas. The gas is first ionized and then the different compounds are split up according to their charge-to-mass ratio. In this experiment we used a quadrupole-mass-spectrometer. A schematic view is shown in figure \ref{fig:schem}.
+\begin{figure}[h!]
+\centering
+    \begin{circuitikz}[ scale=0.9,
+                 	>=stealth',
+                 	pos=.8,
+                 	longL/.style = {cute choke, inductors/scale=0.75,
+       inductors/width=1.6, inductors/coils=9}]
+    \draw[] (-3,0) to [short] (0,0)
+                 to [L] (0,-1)
+                 to [short] (-1,-1)
+                 to [short] (-1,-3)
+                 to [short] (-1.5,-3);
+    \draw[] (-3,0) to [short] (-3,-3)
+                 to [short] (-2.5,-3)
+                 to [battery1, l=$U_h$] (-1.5,-3);
+                 
+    \draw[] (-1,-3) to [battery1, l=$U_a$] (10,-3)
+                      to [ammeter] (10,-0.5)
+                      to [short] (9,-0.5);
+                      
+    \draw[] (9,-1) to (9,0);
+    
+    \draw[] (5,0.75) to [longL] (8,0.75)
+                     to [short] (8,2.5)
+                     to [battery1, l=$U$] (7,2.5)
+                     to [sV, l=$V$] (5,2.5)
+                     to [short] (5,0.75);
+    
+    \draw[] (5,0.5) rectangle (8,0.25);
+    \draw[] (5,-1.25) rectangle (8,-1.5);
+    \draw[dotted] (5,0.25) to (5,-1.25);
+    \draw[dotted] (8,0.25) to (8,-1.25);
+    
+    \node at (1.25, 0.3) {e$^-$};
+                      
+    \draw[->, thick] (0.5,-0.2) to (2,-0.2);
+    \draw[->, thick] (0.5,-0.5) to (2,-0.5);
+    \draw[->, thick] (0.5,-0.8) to (2,-0.8);
+    
+    \node at (2.7,3.5) {probe};
+    \node at (0,3.5) {filament};
+    \node at (6.5,3.5) {quadrupole field};
+    \node at (10,3.5) {detector};
+    
+    \node at (9,0.5) {A};
+    \node at (0,0.5) {K};
+
+    
+    \filldraw[red] (2.4,-0.3) circle (0.2);
+    \filldraw[red] (2.5,-0.8) circle (0.2);
+    \filldraw[red] (2.7,0.1) circle (0.2);
+    \filldraw[blue] (2.6,0.7) circle (0.2);
+    \filldraw[blue] (2.3,-1.3) circle (0.2);
+
+    \filldraw[blue] (3.2,-0.75) circle (0.2);
+    \draw[blue, very thick, ->] (3.5,-0.75) to (5,-0.75) to [bend right = 35] (6,0.25);
+
+    \filldraw[red] (3.2,-0.2) circle (0.2);
+    \draw[red, very thick,->] (3.5,-0.2) to (5,-0.2) sin (5.5,0) cos (6,-0.2)
+                                      sin (6.5,-0.4) cos (7,-0.2) sin (7.5,0)
+                                      cos (8,-0.2) to (9,-0.2);
+                                      
+    \draw[ultra thick, ->] (11,-1.75) to (12,-1.75);
+    \draw[rounded corners] (12.25, -2.5) rectangle (13.75, -1) {};
+    \node at (13,-1.75) {ADC};
+
+    \end{circuitikz}
+    \caption{Schematic view of a quadrupole-mass-spectrometer. The probe consists of red and blue elements. The setup is configured such that the red ions will follow a resonating path and arrive at the detector. The blue ions will follow a non-resonating path and are lost in the walls. When an ion hits the detector (anode) a current will flow and is measurable with the Ammeter.}
+    \label{fig:schem}
+\end{figure}
 
 \subsection{Working principle}
     The gaseous probe is first ionized. This is done by electrons that are detached from a glowing filament and accelerated by an electric field. They then hit the compounds of the probe.  The newly generated ions are then also accelerated by the electric field and guided through a electrodynamic quadrupole field. The three components \eqref{eq:quadstatic} of the equations of motion are given in the manual \cite{manual}.
@@ -21,7 +91,7 @@ Mass-spectrometers are used to measure the amounts of different compounds in a g
         \end{aligned}
     \end{equation}
     where $U$ is the DC-offset and $V$ the amplitude of the alternating voltage.
-    The $y$-axis will act as a low-pass and the $x$-axis as a high pass, together they form a bandpass filter that only lets certain charge-to-mass ratios pass through to the detector. By adjusting the DC-offset and the alternating voltage amplitude we are able to create a stable path, that lets just one component pass through. The parameters $a$ and $q$ \eqref{eq:params} are defined in the manual \cite{manual}.
+    The $y$-axis will act as a low-pass and the $x$-axis as a high pass, together they form a bandpass filter that only lets certain charge-to-mass ratios pass through to the detector. By adjusting the DC-offset and the alternating voltage amplitude we are able to create a stable path, that lets just one component pass through (see figure \ref{fig:schem}). The parameters $a$ and $q$ \eqref{eq:params} are defined in the manual \cite{manual}.
     \begin{equation}
         \begin{aligned}
             a = \frac{4eU}{m\omega^2r_0^2} \\
