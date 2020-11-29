@@ -5,6 +5,15 @@ from utils import fit_peak, gauss
 from scipy.integrate import quad
 from scipy.optimize import curve_fit
 
+
+def oxygen(n, n0, p):
+    return n0 * p ** n
+
+
+def carbondioxide(n, n0, p):
+    return n0 * (1 + p) ** n
+
+
 relative = False
 combine = 1
 start = 0
@@ -36,37 +45,31 @@ for i, c in zip(breath, colors):
     s = np.sum(p)
     co2[-1] /= s
     o2[-1] /= s
-
+    co2err[-1] /= s
+    o2err[-1] /= s
 # plt.xlim(30, 50)
 plt.semilogy()
 plt.ylim(1e-9, 1e-5)
 plt.legend()
 plt.show()
 
-
-def oxygen(n, n0, p):
-    return n0 * p ** n
-
-
-def carbondioxide(n, n0, p):
-    return n0 * (1 + p) ** n
-
-
-popt, pcov = curve_fit(oxygen, np.arange(1, 6), o2)
+popt, pcov = curve_fit(oxygen, np.arange(1, 6), o2, sigma=o2err)
 n = np.linspace(0, 6, 100)
 print(popt)
 plt.plot(n, 100 * oxygen(n, *popt), ls="--", color="red")
 
-popt, pcov = curve_fit(carbondioxide, np.arange(1, 6), co2)
+popt, pcov = curve_fit(carbondioxide, np.arange(1, 6), co2, sigma=co2err)
 n = np.linspace(0, 6, 100)
 print(popt)
 plt.plot(n, 100 * carbondioxide(n, *popt), ls="--", color="blue")
 
-plt.errorbar(np.arange(1, 6), 100 * np.array(co2), co2err, color="blue", capsize=3, capthick=0.4, ecolor="black",
+plt.errorbar(np.arange(1, 6), 100 * np.array(co2), np.array(co2err) * 100, color="blue", capsize=3, capthick=0.4,
+             ecolor="black",
              elinewidth=0.4,
              fmt='.',
              label=r'$CO_2$')
-plt.errorbar(np.arange(1, 6), 100 * np.array(o2), o2err, color="red", capsize=3, capthick=0.4, ecolor="black",
+plt.errorbar(np.arange(1, 6), 100 * np.array(o2), np.array(o2err) * 100, color="red", capsize=3, capthick=0.4,
+             ecolor="black",
              elinewidth=0.4,
              fmt='.',
              label=r'$O_2$')
