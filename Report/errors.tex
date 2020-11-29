@@ -1,0 +1,14 @@
+\section{Error calculation}
+\label{app:err}
+\subsection{Calibration error}
+\label{app:err_cal}
+The error $\sigma_{m}$ on the calibration can be derived using error propagation as shown in \eqref{eq:cal_err}.
+\begin{align}
+    \sigma_m = \sqrt{ \left(\frac{\partial m}{\partial m_\text{Ag, fit}}\cdot \sigma_{m_\text{Ag, fit}}\right)^2 + \left(\frac{\partial m}{\partial m_\text{Xe, fit}}\cdot \sigma_{m_\text{Xe, fit}}\right)^2}
+    \label{eq:cal_err}
+\end{align}
+with
+\begin{align*}
+     \frac{\partial m}{\partial m_\text{Ag, fit}} &= \frac{m_\text{Xe, true} - m_\text{Ag, true}}{(m_\text{Xe, fit} - m_\text{Ag, fit})^2} \cdot (m-m_\text{Xe, fit}) \\
+    \frac{\partial m}{\partial m_\text{Xe, fit}} &= \frac{m_\text{Xe, true} - m_\text{Ag, true}}{(m_\text{Xe, fit} - m_\text{Ag, fit})^2} \cdot (m-m_\text{Ag, fit})
+\end{align*}
