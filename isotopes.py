@@ -32,11 +32,11 @@ frac_xe_err = np.round(np.sqrt(((1/s)**2  - p_xe/s**3 )* p_xe_err**2 + (p_xe/s**
 
 
 with open('isotop_xenon.csv','w', newline='') as csvfile:
-    fieldnames = ['Isotop', 'fraction [%]', 'err']
+    fieldnames = ['Isotop', 'fraction', 'err']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
     for i in np.arange(len(p_xe)):
-        writer.writerow({'Isotop': '$Xe^{}$'.format(xe_iso[i]), 'fraction [%]': frac_xe[i], 'err': frac_xe_err[i]})
+        writer.writerow({'Isotop': r'Xe$^{}$'.format(xe_iso[i]), 'fraction': frac_xe[i], 'err': frac_xe_err[i]})
 
 
 #krpyton mix data
@@ -58,11 +58,11 @@ frac_kr_err = np.round(np.sqrt(((1/s)**2  - p_kr/s**3 )* p_kr_err**2  + (p_kr/s*
 
 
 with open('isotop_krypton.csv','w', newline='') as csvfile:
-    fieldnames = ['Isotop', 'fraction [%]', 'err']
+    fieldnames = ['Isotop', 'fraction', 'err']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
     for i in np.arange(len(p_kr)):
-        writer.writerow({'Isotop': '$Ke^{}$'.format(kr[i]), 'fraction [%]': frac_kr[i], 'err': frac_kr_err[i]})
+        writer.writerow({'Isotop': r'Kr$^{}$'.format(kr[i]), 'fraction': frac_kr[i], 'err': frac_kr_err[i]})
 
 
 

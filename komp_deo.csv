@@ -1,5 +1,5 @@
-substance,fraction [%],err
-ethanol,[5.01417997],[1.0547195]
-propane,[23.93861045],[7.85884506]
-butane,[40.32891767],[9.67270758]
-isobutane,[30.7182919],[8.99700507]
+substance,fraction,err
+ethanol,5.01,1.05
+propane,23.94,7.86
+butane,40.33,9.67
+isobutane,30.72,9.0
