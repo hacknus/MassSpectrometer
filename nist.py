@@ -68,7 +68,7 @@ def nist_aprox(atom, integr_p, integr_p_err, plot_name, ethanol=False):
     p_h2o_0 = p_h2o_scaled
     amu_h2, p_h2_scaled, p_h2_scaled_err = scale_nist(atom, integr_p, integr_p_err, 'hydrogen')
     amu_ethanol, p_ethanol_scaled, p_ethanol_scaled_err= scale_nist(atom, integr_p,  integr_p_err,'ethanol')
-    p_ethanol_0 = p_ethanol_scaled
+    p_ethanol_0 = sum(p_ethanol_scaled)
 
 # cupled par (propane and butane)
     n_propane = get_nist_peaks("propane", p_number=7)
@@ -186,9 +186,9 @@ def nist_aprox(atom, integr_p, integr_p_err, plot_name, ethanol=False):
 #        p_butane_scaled = np.zeros(len(amu_butane), int)
 #        p_propane_scaled_err = np.zeros(len(amu_propane), int)
 #        p_butane_scaled_err = np.zeros(len(amu_butane), int)
-    p_butane_0 = p_butane_scaled
-    p_isobutane_0 = p_isobutane_scaled
-    p_propane_0 = p_propane_scaled
+    p_butane_0 = sum(p_butane_scaled)
+    p_isobutane_0 = sum(p_isobutane_scaled)
+    p_propane_0 = sum(p_propane_scaled)
     
 
 #dependent maxima for co2
@@ -347,7 +347,9 @@ def nist_aprox(atom, integr_p, integr_p_err, plot_name, ethanol=False):
     width = 0.9
     fig, ax = plt.subplots(1, 1)
     ax.set_title(plot_name)
-
+    print(p_isobutane_0)
+    print(p_butane_0)
+    print(p_propane_0)
     ax.bar(atom + width / 4, integr_p, width=width / 2, color="black", label='measured')
     if sum(p_h2_scaled) != 0:
         ax.bar(amu_h2 - width / 4, p_h2_scaled, width=width / 2, color="m", label=r'NIST H$_2$')
@@ -357,13 +359,13 @@ def nist_aprox(atom, integr_p, integr_p_err, plot_name, ethanol=False):
         ax.bar(amu_argon - width / 4, p_argon_scaled, width=width / 2, color="steelblue", label=r'NIST Ar')
     if sum(p_xenon_scaled) != 0:
         ax.bar(amu_xenon - width / 4, p_xenon_scaled, width=width / 2, color="deepskyblue", label=r'NIST Xe')
-    if sum(p_ethanol_scaled) != 0:
+    if p_ethanol_0 != 0:
         ax.bar(amu_ethanol - width / 4, p_ethanol_scaled, width=width / 2, color="deepskyblue", label=r'NIST ethanol')
-    if sum(p_isobutane_0) != 0:
+    if p_isobutane_0 != 0:
         ax.bar(amu_isobutane - width / 4, p_isobutane_scaled, width=width / 2, color="purple", label=r'NIST isobutane')
-    if sum(p_propane_0) != 0:
+    if p_propane_0 != 0:
         ax.bar(amu_propane - width / 4, p_propane_scaled, width=width / 2, color="pink", label=r'NIST propane')
-    if sum(p_butane_0) != 0:
+    if p_butane_0 != 0:
         ax.bar(amu_butane - width / 4, p_butane_scaled, width=width / 2, color="orange", label=r'NIST butane')
     if sum(p_h2o_0) != 0:
         ax.bar(amu_h2o - width / 4, p_h2o_scaled, width=width / 2, color="red", label=r'NIST H$_2$O')

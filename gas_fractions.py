@@ -31,6 +31,6 @@ nobel_gas = nist_aprox(*gas_analysis('mix2.csv','mix_baseline2.csv'),'mix')
 exp_comp = ['Ar','Xe','Kr']
 Fraction_Table(*nobel_gas,exp_comp,'nobel_gas')
 
-air = nist_aprox(*gas_analysis('air00.csv','airbaseline.csv'),'air')
+air = nist_aprox(*gas_analysis('air0.csv','airbaseline.csv'),'air0')
 exp_comp = [r'N$_2$',r'O$_2$']
 Fraction_Table(*air,exp_comp,'air_o2_vs_n2')
