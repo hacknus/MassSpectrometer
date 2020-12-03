@@ -25,5 +25,5 @@ from gas_analysis import gas_analysis
 #nist_aprox(*gas_analysis('air4.csv','airbaseline.csv'),'air4')
 #nist_aprox(*gas_analysis('air5.csv','airbaseline.csv'),'air5')
 
-#nist_aprox(*gas_analysis('vodka_pure.csv','air_background.csv',False),'vodka pure',True)
-nist_aprox(*gas_analysis('vodka.csv','air_background.csv',False),'vodka',True)
+nist_aprox(*gas_analysis('vodka_pure.csv','air_background.csv',False),'vodka pure',True)
+#nist_aprox(*gas_analysis('vodka.csv','air_background.csv',False),'vodka',True)

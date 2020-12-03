@@ -27,7 +27,7 @@ def gas_analysis(file,baseline_file=False,new = True):
     for i in np.arange(0,len(amu)-1,steps):
         if amu[i] < 50:
             if new: selection = err[i]<p[i] and err[i+1]<p[i+1] and (err[i-1]<p[i-1] or i ==0)
-            else: selection = err[i]<p[i] and err[i+1]<p[i+1]
+            else: selection = err[i]<p[i] and err[i+1]<p[i+1] and (err[i-1]<p[i-1] or i ==0)
             
             if  selection:
                 peak=int(np.round(amu[i]))
