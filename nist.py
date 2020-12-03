@@ -42,21 +42,23 @@ def scale_nist(atom, integr_p, integr_p_err, gas, number=12):
 n_isobutane = get_nist_peaks("isobutane", p_number=12)
 amu_isobutane = np.array(n_isobutane.m)
 p_isobutane = np.array(n_isobutane.y)
-print(n_isobutane)
+#print(n_isobutane)
 
 n_isopropanol = get_nist_peaks("isopropanol", p_number=12)
 amu_isopropanol = np.array(n_isopropanol.m)
 p_isopropanol = np.array(n_isopropanol.y)
-print(n_isopropanol)
+#print(n_isopropanol)
 
 n_butane = get_nist_peaks("butane", p_number=12)
-print(n_butane)
+#print(n_butane)
 n_propane = get_nist_peaks("propane", p_number=12)
-print(n_propane)
+#print(n_propane)
 n_n2 = get_nist_peaks("nitrogen", p_number=12)
-print(n_n2)
+#print(n_n2)
 n_ethanol = get_nist_peaks("ethanol", p_number=12)
-print(n_ethanol)
+#print(n_ethanol)
+#print(get_nist_peaks('oxygen',12))
+
 
 def nist_aprox(atom, integr_p, integr_p_err, plot_name, ethanol=False):
     amu_o2, p_o2_scaled, p_o2_scaled_err  = scale_nist(atom, integr_p,integr_p_err, 'oxygen')
@@ -347,9 +349,6 @@ def nist_aprox(atom, integr_p, integr_p_err, plot_name, ethanol=False):
     width = 0.9
     fig, ax = plt.subplots(1, 1)
     ax.set_title(plot_name)
-    print(p_isobutane_0)
-    print(p_butane_0)
-    print(p_propane_0)
     ax.bar(atom + width / 4, integr_p, width=width / 2, color="black", label='measured')
     if sum(p_h2_scaled) != 0:
         ax.bar(amu_h2 - width / 4, p_h2_scaled, width=width / 2, color="m", label=r'NIST H$_2$')

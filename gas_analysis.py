@@ -10,27 +10,39 @@ from nist import get_nist_peaks, nist_aprox
 
 
 
-def gas_analysis(file,baseline_file=False):
+def gas_analysis(file,baseline_file=False,new = True):
     #select significant peaks
     combine=1
     amu_min=0
     amu_max= 140
     relative=False
-    amu, p, err = sequences(file, baseline_file, combine, amu_min, amu_max,relative, False,new=True)
+    plot = False
+    amu, p, err = sequences(file, baseline_file, combine, amu_min, amu_max,relative, plot,new)
     plt.plot(amu,p)
     plt.show
     
-    atom=[1]
-    for i in np.arange(0,len(amu)-1,10):
+    atom=[]
+    if new: steps = 10      
+    else: steps = 5    
+    for i in np.arange(0,len(amu)-1,steps):
         if amu[i] < 50:
-            if  err[i]<p[i] and err[i+1]<p[i+1] and err[i-1]<p[i-1]:
+            if new: selection = err[i]<p[i] and err[i+1]<p[i+1] and (err[i-1]<p[i-1] or i ==0)
+            else: selection = err[i]<p[i] and err[i+1]<p[i+1]
+            
+            if  selection:
                 peak=int(np.round(amu[i]))
+                if file == 'air2.csv' and (peak == 3 or peak ==5 or peak == 31 or peak == 43):
+                    continue
+                if atom == []:
+                    atom.append(peak)
+                    continue
                 if np.array(atom)[-1] < peak:
                     atom.append(peak)
                    
                   
               
-        if amu[i] > 50:                                                     #amu verschiebt sich leicht, daher korrektur
+        if amu[i] > 50:              
+            #amu verschiebt sich leicht, daher korrektur
             if  err[i]<p[i] and err[i+1]<p[i+1] and err[i+2]<p[i+2]:
                 peak=int(np.round(amu[i]))
                 if np.array(atom)[-1] < peak:
@@ -43,11 +55,10 @@ def gas_analysis(file,baseline_file=False):
                         atom.append(65.5)
                         p65 = p[i]
                         p65_err = err[i]  
-                        print(p64_err)
-                        print(p65_err)
+ 
     atom = np.array(atom)
     amu_min = atom-1.3
-    amu_min[0]=0
+    if amu_min[0] < 0: amu_min[0] = 0
     amu_max = atom-0.3
     if max(amu) >60:
         for  i in np.arange(len(atom+2)):
@@ -75,6 +86,8 @@ def gas_analysis(file,baseline_file=False):
             if atom[i]==98:
                 amu_min[i]+=0.2
                 amu_max[i]+=-0.4
+            
+            
     integr_p = []
     integr_p_err = []
 
@@ -93,7 +106,7 @@ def gas_analysis(file,baseline_file=False):
             integr_p_err.append(np.sqrt(2*np.pi*(p65**2*sigma_err_2+sigma**2*p65_err**2)))
             continue
         fig, ax = plt.subplots(1, 1)
-        amu, p, err = sequences(file, baseline_file, combine, i, j, relative,plot=False,new= True)
+        amu, p, err = sequences(file, baseline_file, combine, i, j, relative,plot,new)
         ax.plot(amu,p)
         ax.errorbar(amu, p, err, capsize=3, capthick=0.4, ecolor="black", elinewidth=0.4, fmt='none')
         ax.set_title('peak at {} amu'.format(k))
