@@ -31,12 +31,13 @@ frac_xe = np.round(p_xe/sum(p_xe)*100,2)
 frac_xe_err = np.round(np.sqrt(((1/s)**2  - p_xe/s**3 )* p_xe_err**2 + (p_xe/s**2)**2 * s_err**2)*100,2)
 
 
-with open('isotop_xenon.csv','w', newline='') as csvfile:
-    fieldnames = ['Isotop', 'fraction', 'err']
-    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-    writer.writeheader()
-    for i in np.arange(len(p_xe)):
-        writer.writerow({'Isotop': r'Xe$^{}$'.format(xe_iso[i]), 'fraction': frac_xe[i], 'err': frac_xe_err[i]})
+#with open('isotop_xenon.csv','w', newline='') as csvfile:
+#    fieldnames = ['Isotop', 'fraction', 'err', 'lit']
+#    lit= [1.92, 26.44, 4.08, 21.18, 26.89, 10.44, 8.87]
+#    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+#    writer.writeheader()
+#    for i in np.arange(len(p_xe)):
+#        writer.writerow({'Isotop': r'Xe$^{}$'.format(xe_iso[i]), 'fraction': frac_xe[i], 'err': frac_xe_err[i], 'lit': lit[i]})
 
 
 #krpyton mix data
@@ -112,6 +113,12 @@ p_ar_half_err = err[amu==20]
 
 p_ar = p_ar_iso + p_ar_half
 p_ar_err = np.sqrt(p_ar_iso_err**2+p_ar_half_err**2)
+
+
+
+
+
+
 
 #Doppeljonisierung in abhängigkeit von massenzahl:
 dop_xe = p_xe_half/p_xe

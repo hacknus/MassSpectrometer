@@ -27,7 +27,7 @@ plt.tight_layout()
 plt.savefig("Report/DataResultsPlots/{}_variation_CO2.pdf".format(param))
 plt.show()
 
-
+double_plot(param,title,0,2,'h2',42,44,'co2')
 
 
 

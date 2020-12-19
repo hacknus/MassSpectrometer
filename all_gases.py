@@ -17,13 +17,14 @@ from gas_analysis import gas_analysis
 #nist_aprox(*gas_analysis('deo.csv','airbaseline.csv'),'Deo')
 #nist_aprox(*gas_analysis('ethanol.csv','co2baseline.csv'),'Ethanol',True)
 
-#nist_aprox(*gas_analysis('air00.csv','airbaseline.csv'),'air00')
-#nist_aprox(*gas_analysis('air0.csv','airbaseline.csv'),'air0')
+#nist_aprox(*gas_analysis('air00.csv','airbaseline.csv'),'air00'))
+print(nist_aprox(*gas_analysis('air0.csv','airbaseline.csv'),'air0'))
 #nist_aprox(*gas_analysis('air1.csv','airbaseline.csv'),'air1')
 #nist_aprox(*gas_analysis('air2.csv','airbaseline.csv'),'air2')
 #nist_aprox(*gas_analysis('air3.csv','airbaseline.csv'),'air3')
 #nist_aprox(*gas_analysis('air4.csv','airbaseline.csv'),'air4')
 #nist_aprox(*gas_analysis('air5.csv','airbaseline.csv'),'air5')
 
-nist_aprox(*gas_analysis('vodka_pure.csv','air_background.csv',False),'vodka pure',True)
+#nist_aprox(*gas_analysis('vodka_pure.csv','air_background.csv',False),'vodka pure',True)
+
 #nist_aprox(*gas_analysis('vodka.csv','air_background.csv',False),'vodka',True)
