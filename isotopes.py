@@ -59,11 +59,12 @@ frac_kr_err = np.round(np.sqrt(((1/s)**2  - p_kr/s**3 )* p_kr_err**2  + (p_kr/s*
 
 
 with open('isotop_krypton.csv','w', newline='') as csvfile:
-    fieldnames = ['Isotop', 'fraction', 'err']
+    fieldnames = ['Isotop', 'fraction', 'err', 'lit']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
+    lit= [57.00, 17.30]
     for i in np.arange(len(p_kr)):
-        writer.writerow({'Isotop': r'Kr$^{}$'.format(kr[i]), 'fraction': frac_kr[i], 'err': frac_kr_err[i]})
+        writer.writerow({'Isotop': r'Kr$^{}$'.format(kr[i]), 'fraction': frac_kr[i], 'err': frac_kr_err[i], 'lit': lit[i]})
 
 
 
@@ -102,17 +103,53 @@ p_xe_err_mix = np.sqrt(p_xe_iso_err_mix**2+p_xe_half_err_mix**2)
 #argon with argon data
 amu, p, err = gas_analysis('argon2.csv','argonbaseline.csv')
 
-ar_half = np.array([20])
-ar_iso = np.array([40])
+ar_iso = [36, 40]
+ar_half = [20]
 
-p_ar_iso = p[amu==40]
-p_ar_iso_err = err[amu==40]  
+p_ar_iso = []
+p_ar_iso_err = []
+for i in ar_iso:
+    p_ar_iso.append(*p[amu==i])
+    p_ar_iso_err.append(*err[amu==i])
 
-p_ar_half = p[amu==20]
-p_ar_half_err = err[amu==20]  
+p_ar_half = []
+p_ar_half_err = []
+for i in ar_half:
+    p_ar_half.append(*p[amu==i])
+    p_ar_half_err.append(*err[amu==i])
+    
+p_ar =np.array(np.array(p_ar_iso) + np.array(p_ar_half))
+p_ar_err = np.array(np.sqrt(np.array(p_ar_iso_err)**2 + np.array(p_ar_half_err)**2))
 
-p_ar = p_ar_iso + p_ar_half
-p_ar_err = np.sqrt(p_ar_iso_err**2+p_ar_half_err**2)
+
+s = sum(p_ar)
+s_err = np.sqrt(sum(p_ar_err**2))
+frac_ar = np.round(p_ar/sum(p_ar)*100,2)
+frac_ar_err = np.round(np.sqrt(((1/s)**2  - p_ar/s**3 )* p_ar_err**2 + (p_ar/s**2)**2 * s_err**2)*100,2)
+
+with open('isotop_argon.csv','w', newline='') as csvfile:
+    fieldnames = ['Isotop', 'fraction', 'err', 'lit']
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    lit= [0.33, 99.6]
+    lit_amu=[]
+    writer.writeheader()
+    for i in np.arange(len(p_ar)):
+        writer.writerow({'Isotop': r'Ar$^{}$'.format(ar_iso[i]), 'fraction': frac_ar[i], 'err': frac_ar_err[i], 'lit': lit[i]})
+
+
+
+#ar_half = np.array([20])
+#ar_iso = np.array([40,36])
+
+
+#p_ar_iso = p[amu==40]
+#p_ar_iso_err = err[amu==40]  
+
+#p_ar_half = p[amu==20]
+#p_ar_half_err = err[amu==20]  
+
+#p_ar = p_ar_iso + p_ar_half
+#p_ar_err = np.sqrt(p_ar_iso_err**2+p_ar_half_err**2)
 
 
 

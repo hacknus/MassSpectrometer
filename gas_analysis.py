@@ -26,9 +26,9 @@ def gas_analysis(file,baseline_file=False,new = True):
     else: steps = 5    
     for i in np.arange(0,len(amu)-1,steps):
         if amu[i] < 50:
-            if new: selection = err[i]<p[i] and err[i+1]<p[i+1] and (err[i-1]<p[i-1] or i ==0)
-            else: selection = err[i]<p[i] and err[i+1]<p[i+1] and (err[i-1]<p[i-1] or i ==0)
-            
+            selection = err[i]<p[i] and err[i+1]<p[i+1] and (err[i-1]<p[i-1] or i ==0)
+            if int(round(amu[i])) == 2 and file == 'xenonbaseline_highres.csv':    #xenon baseline has a h2 peak which lies between 2.0 and 2.5 
+                selection = True
             if  selection:
                 peak=int(np.round(amu[i]))
                 if file == 'air2.csv' and (peak == 3 or peak ==5 or peak == 31 or peak == 43):

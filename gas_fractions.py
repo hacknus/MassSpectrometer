@@ -24,7 +24,7 @@ exp_comp = ['ethanol','propane','butane','isobutane']
 Fraction_Table(*deo,exp_comp,'deo')
 
 residual = nist_aprox(*gas_analysis('xenonbaseline_highres.csv',False),'resiudal gas')
-exp_comp = [r'H$_2$O',r'CO$_2$',r'N$_2$',r'O$_2$']
+exp_comp = [r'H$_2$',r'H$_2$O',r'CO$_2$',r'N$_2$',r'O$_2$']
 Fraction_Table(*residual,exp_comp,'residual')
 
 nobel_gas = nist_aprox(*gas_analysis('mix2.csv','mix_baseline2.csv'),'mix')

@@ -59,4 +59,4 @@ def sequences(filename, baseline_filename, combine=5, start=0, end=140, relative
 
 
 if __name__ == '__main__':
-    sequences("restgasspektrum_FARx7_5prozent.csv", False, 5, 0, 150, False, True)
+    sequences('xenon_highres.csv',False, 1, 0, 2, False, True, True)
