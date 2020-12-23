@@ -25,7 +25,7 @@ def hist(df, file, combine=1, plot=False, start=0, end=-1):
         err_quat += err_quat0[i:-n:combine] ** 2
     amu /= combine
     err = np.sqrt(err_quat)
-    if not plot:
+    if plot:
         plt.title(file.replace(".csv", ""))
         plt.bar(amu, p, width=0.2 * combine, color="red", label=str(df.type[0]))
         plt.errorbar(amu, p, err, capsize=3, capthick=0.4, ecolor="black", elinewidth=0.4, fmt='none')

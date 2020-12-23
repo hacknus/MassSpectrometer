@@ -6,7 +6,7 @@ from read_data import hist
 from utils import fit_peak
 
 
-def sequences(filename, baseline_filename, combine=5, start=0, end=140, relative=True, plot=True, new=False):
+def sequences(filename, baseline_filename, combine=5, start=0, end=140, relative=True, plot=False, new=False):
     if new:
         path = "Data2AvgCal/" + filename
     else:
@@ -22,7 +22,7 @@ def sequences(filename, baseline_filename, combine=5, start=0, end=140, relative
         # df["p"] = df["p"] - df_noise["p"]*sum(df["p"])/sum(df_noise["p"])   #normation of pressure
         df["p"] = df["p"] - df_noise["p"]
         df["err"] = np.sqrt(df["err"] ** 2 + df_noise["err"] ** 2)
-    amu, p, err = hist(df, filename, combine, plot=True)
+    amu, p, err = hist(df, filename, combine, plot=False)
     
     if relative:
         err = err / sum(p) * 100

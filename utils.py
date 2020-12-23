@@ -25,11 +25,11 @@ def fit_peak(m, p, err=None, m1=None, m2=None, ax=None):
         popt, pcov = curve_fit(gauss, m, p, p0=[max(p), peak, 1], maxfev=2000)
     else:
         popt, pcov = curve_fit(gauss, m, p, p0=[max(p), peak, 1], sigma=err, maxfev=2000)
-    print(f"found peak of pressure p={popt[0]} at m={popt[1]:.5f} +/- {pcov[1][1]:.5f} with width={popt[2]}")
+   # print(f"found peak of pressure p={popt[0]} at m={popt[1]:.5f} +/- {pcov[1][1]:.5f} with width={popt[2]}")
     if ax:
         m_lin = np.linspace(m[0], m[-1], 1000)
-        ax.plot(m_lin, gauss(m_lin, *popt), ls="--", color="red")
-        ax.fill_between(m_lin,gauss(m_lin, *popt),0,color="red",alpha=0.5)
+        #ax.plot(m_lin, gauss(m_lin, *popt), ls="--", color="red")
+        #ax.fill_between(m_lin,gauss(m_lin, *popt),0,color="red",alpha=0.5)
     return popt, pcov
 
 

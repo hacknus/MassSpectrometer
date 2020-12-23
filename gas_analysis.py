@@ -105,17 +105,17 @@ def gas_analysis(file,baseline_file=False,new = True):
             integr_p.append(np.sqrt(2*np.pi)*p65*sigma)            
             integr_p_err.append(np.sqrt(2*np.pi*(p65**2*sigma_err_2+sigma**2*p65_err**2)))
             continue
-        fig, ax = plt.subplots(1, 1)
-        amu, p, err = sequences(file, baseline_file, combine, i, j, relative,plot,new)
-        ax.plot(amu,p)
-        ax.errorbar(amu, p, err, capsize=3, capthick=0.4, ecolor="black", elinewidth=0.4, fmt='none')
-        ax.set_title('peak at {} amu'.format(k))
-        ax.errorbar(amu, p, err, capsize=3, capthick=0.4, ecolor="black", elinewidth=0.4, fmt='none')
-        ax.set_ylabel(r"$p$ [Torr]")
-        ax.set_xlabel("amu")
-        plt.tight_layout()
-        popt, pcov = fit_peak(amu, p, ax=ax)
-        plt.show()
+        #fig, ax = plt.subplots(1, 1)
+        amu, p, err = sequences(file, baseline_file, combine, i, j, relative,False,new)
+        #ax.plot(amu,p)
+        #ax.errorbar(amu, p, err, capsize=3, capthick=0.4, ecolor="black", elinewidth=0.4, fmt='none')
+        #ax.set_title('peak at {} amu'.format(k))
+        #ax.errorbar(amu, p, err, capsize=3, capthick=0.4, ecolor="black", elinewidth=0.4, fmt='none')
+        #ax.set_ylabel(r"$p$ [Torr]")
+        #ax.set_xlabel("amu")
+        #plt.tight_layout()
+        popt, pcov = fit_peak(amu, p, ax=False)
+        #plt.show()
         if popt[2] > 0.4:
             popt[0] = 0
             pcov[0][0] = 0
