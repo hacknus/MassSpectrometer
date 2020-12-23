@@ -60,7 +60,7 @@ plt.xlabel(r"$m$ [amu]")
 plt.show()
 plt.cla()
 plt.clf()
-exit()
+#exit()
 
 popt, pcov = curve_fit(oxygen, np.arange(1, 6), o2, sigma=o2err)
 n = np.linspace(0, 6, 100)
