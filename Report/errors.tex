@@ -8,7 +8,46 @@ The error $\sigma_{m}$ on the calibration can be derived using error propagation
     \label{eq:cal_err}
 \end{align}
 with
-\begin{align*}
+\begin{align}
      \frac{\partial m}{\partial m_\text{Ag, fit}} &= \frac{m_\text{Xe, true} - m_\text{Ag, true}}{(m_\text{Xe, fit} - m_\text{Ag, fit})^2} \cdot (m-m_\text{Xe, fit}) \\
     \frac{\partial m}{\partial m_\text{Xe, fit}} &= \frac{m_\text{Xe, true} - m_\text{Ag, true}}{(m_\text{Xe, fit} - m_\text{Ag, fit})^2} \cdot (m-m_\text{Ag, fit})
-\end{align*}
+\end{align}
+
+\subsection{Component estimation}
+
+
+\begin{align}
+    s_{p_m} =\sqrt{ \sum_{k~in~A} {s_{p_{m_k}}}^2}, 
+\end{align}
+\begin{align}
+    {s_{p_{m_k}}} = \sqrt{({s_{p_k}} \kappa_{m_k})^2 + ({p_k} s_{\kappa_{m_k}})^2}
+\end{align}
+\begin{align}
+    s_{\kappa_{m_k}} = \sqrt{(\frac{1}{p_k'^2}- \frac{p_{m_k}'}{p_k'^3})s_{p_{m_k}'}^2 +  (\frac{p_{m_k}'}{p_k'^2} s_{p_{m_k}'})^2}
+\end{align}
+\begin{align}
+    s_{p_{m_k}'} = r_{m_k} s_{\alpha_m}
+\end{align}
+\begin{align}
+    s_{\alpha_m} = \sqrt{s_{p_{A_{max~m}}}^2 + s_{p_{n_{A_{max~m}}}'}^2}
+\end{align}
+where $n$ i a substance that also occupies $A_{max~m}$. 
+\begin{align}
+     s_{\alpha_{pro}}^2= (r_{but29} \cdot r_{iso41} \cdot s_{p_{43}} / d)^2 +  (r_{but29} \cdot r_{iso43} \cdot s_{p_{41}} / d)^2 + ( r_{but41} \cdot r_{iso29} \cdot s_{p_{43}}/d)^2 \\ \nonumber
+     + ( r_{but41} \cdot r_{iso43} \cdot s_{p_{29}}/d)^2 +  (r_{but43} \cdot r_{iso29} \cdot s_{p_{41}}/d)^2 + (r_{but43} \cdot r_{iso41} \cdot  s_{p_{29}}/d)^2
+\end{align}
+
+\begin{align}
+     s_{\alpha_{but}}^2 = (r_{iso29} \cdot s_{p_43} \cdot r_{pro41}/d)^2 + (r_{iso29} \cdot s_{p_41} \cdot r_{pro43}/d)^2 + (r_{iso41} \cdot s_{p_43} \cdot r_{pro29}/d)^2 \\ \nonumber
+     + (r_{iso41} \cdot  s_{p_29} \cdot r_{pro43}/d)^2 + (r_{iso43} \cdot s_{p_41} \cdot r_{pro29}/d)^2 + (r_{iso43} \cdot  s_{p_29} \cdot r_{pro41}/d)^2
+\end{align}
+
+\begin{align}
+     s_{\alpha_{iso}}^2 = (r_{but29} \cdot s_{p_43} \cdot r_{pro41}/d)^2 + (r_{but29} \cdot s_{p_41} \cdot r_{pro43}/d)^2 + (r_{but41} \cdot s_{p_43} \cdot r_{pro29}/d)^2\\ \nonumber
+     + (r_{but41} \cdot  s_{p_29} \cdot r_{pro43}/d)^2 + (r_{but43} \cdot s_{p_41} \cdot r_{pro29}/d)^2 + (r_{but43} \cdot  s_{p_29} \cdot r_{pro41}/d)^2
+\end{align}
+
+\begin{align}
+    d = -r_{but29} \cdot r_{iso41} \cdot r_{pro43} + r_{but29} \cdot r_{iso43} \cdot r_{pro41} + r_{but41} \cdot r_{iso29} \cdot r_{pro43} \\ \nonumber
+    - r_{but41} \cdot r_{iso43} \cdot r_{pro29} - r_{but} \cdot r_{iso29} \cdot r_{pro41} + r_{but} \cdot r_{iso41} \cdot r_{pro29}         
+\end{align}
