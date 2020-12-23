@@ -387,7 +387,7 @@ def nist_aprox(atom, integr_p, integr_p_err, plot_name, ethanol=False):
                 fmt='none')
 
     ax.set_ylabel(r"$p$ [Torr]")
-    ax.set_xlabel("amu")
+    ax.set_xlabel("m/q [amu/e]")
     if max(atom) < 60:
         ax.set_xticks(np.arange(0, max(atom) + 1, 5))
     if max(atom) > 60:
