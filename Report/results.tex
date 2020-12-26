@@ -157,7 +157,7 @@
             \toprule isotope & abundance [\%] & literature  [\%]
             \DTLforeach{xenon_isotop}{\mat=Isotop,\a=fraction,\aerr=err, \b=lit}
             {\DTLiffirstrow{\\ \midrule}{\\}
-            \mat & \pgfmathprintnumber[textnumber]\a~$\pm$~\pgfmathprintnumber[textnumber]\aerr & \b} 
+             Xe \mat  & \pgfmathprintnumber[textnumber]\a~$\pm$~\pgfmathprintnumber[textnumber]\aerr & \b} 
             \\\bottomrule
         \end{tabular}
         \caption{Xenon isotopes}
@@ -175,7 +175,7 @@
             \toprule isotope & abundance [\%] & literature  [\%]
             \DTLforeach{argon_isotop}{\mat=Isotop,\a=fraction,\aerr=err, \b=lit}
             {\DTLiffirstrow{\\ \midrule}{\\}
-            \mat & \pgfmathprintnumber[textnumber]\a~$\pm$~\pgfmathprintnumber[textnumber]\aerr & \b}
+            Ar \mat & \pgfmathprintnumber[textnumber]\a~$\pm$~\pgfmathprintnumber[textnumber]\aerr & \b}
             \\\bottomrule
         \end{tabular}
         \caption{Argon isotopes}
@@ -194,7 +194,7 @@
             \toprule isotope & abundance [\%] & literature  [\%]
             \DTLforeach{krypton_isotop}{\mat=Isotop,\a=fraction,\aerr=err, \b=lit}
             {\DTLiffirstrow{\\ \midrule}{\\}
-            \mat & \pgfmathprintnumber[textnumber]\a~$\pm$~\pgfmathprintnumber[textnumber]\aerr & \b}
+             Kr \mat & \pgfmathprintnumber[textnumber]\a~$\pm$~\pgfmathprintnumber[textnumber]\aerr & \b}
             \\\bottomrule
         \end{tabular}
         \caption{Krypton isotopes}
@@ -231,11 +231,12 @@
     $$ n_{\text{O}_2} = (14.17 \pm 1.97) \%$$
     And the initial value of carbon dioxide:
     $$ n_{\text{CO}_2} = (1.47 \pm 0.56) \%$$
-    Theoretically the conversion ratio is 1:1. However, our mass-spectrometer cannot relatively measure the amount correctly because not all elements are equally well ionized. Additionally the high deviation of our datapoints from our fit is suspected to be due to the amount of nitrogen decreasing. The amount of Nitrogen is fluctuating between different measurements\footnote{the system is not equally sensitive to all elements}, and since nitrogen has a significant impact on the overall pressure, we see it directly in the normalised values for CO$_2$ and O$_2$ in the absolute amount plot. This correlation effect is also visible in  the relative plot where we plot the ratio of the amount of CO$_2$ and O$_2$. The factor $p$ we received from the fit is:
+    The two fits assume that the conversion ratio is 1:1. The high deviation of our datapoints from our fit is suspected to be due to the amount of nitrogen decreasing. The amount of Nitrogen is fluctuating between different measurements, and since nitrogen has a significant impact on the overall pressure, we see it directly in the normalised values for CO$_2$ and O$_2$ in the absolute amount plot. This correlation effect is also visible in  the relative plot where we plot the ratio of the amount of CO$_2$ and O$_2$. The factor $p$ we received from the fit is:
     $$p = (90.07 \pm 3.93) \;\text{per breath}$$
     This would suggest that around 9.93 $\pm$ 3.93 \% of the inhaled oxygen would be converted to carbon-dioxide during one breath.
     In reality, the oxygen amount decreases by about 4 to 5 \% per breath \cite{breath}.\\
-    In figure \ref{fig:air} we also notice that the error-bars on the oxygen measurements are significantly larger than the ones for the carbon-dioxide measurements. This is another indication that the system has not the same sensitivity for both elements.
+    In figure \ref{fig:air}a we also notice that the error-bars on the oxygen measurements are significantly larger than the ones for the carbon-dioxide measurements. This is an indication that the system has not the same sensitivity for both components. Probably because the two components are not ionised equally well.
+    In figure \ref{fig:air}b we see that the ratio of CO$_2$/O$_2$ increases and reaches 1. It follows a more or less linear pattern.
     
     
     \subsection{Measurement of Ethanol}
