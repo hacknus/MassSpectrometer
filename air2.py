@@ -53,7 +53,7 @@ plt.plot(n, 100 * oxygen(n, *popt), ls="--", color="red")
 
 
 def carbondioxide(n, n0):
-    return popt[0] - n0 * popt[1] ** n
+    return n0 + popt[0] - popt[0] * popt[1] ** n
 
 
 co2relerr[0] = co2relerr[1]
@@ -84,6 +84,17 @@ plt.savefig("Report/DataResultsPlots/air.pdf")
 plt.show()
 
 # fraction
+
+def linear(x, m, b):
+    return m*x + b
+
+frac_err[0] = frac_err[1]
+
+popt, pcov = curve_fit(linear, np.arange(0, 6), frac, sigma=frac_err)
+
+print(f"m = {100 * popt[0]:.4f} +/- {100 * np.sqrt(pcov[0][0]):.4f}")
+
+#plt.plot(np.arange(0, 6), linear(np.arange(0, 6), *popt), color="red", ls="--")
 plt.errorbar(np.arange(0, 6), frac, frac_err, color="red", capsize=3, capthick=0.4,
              ecolor="black",
              elinewidth=0.4,
