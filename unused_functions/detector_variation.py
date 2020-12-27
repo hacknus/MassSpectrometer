@@ -7,31 +7,25 @@ from choose_sequences import sequences
 from utils import fit_peak
 from voltage_variation import double_plot, sequence_plot
 
-
-
 combine = 1
 relative = False
-delta_ms = np.array([50,70,90])
-colors = ['r','b','g','y']
+delta_ms = np.array([50, 70, 90])
+colors = ['r', 'b', 'g', 'y']
 title = r'Acceleration voltage'
 param = 'detector'
 
-double_plot(param,title,0,2,r'$H_2$',16,19,r'$H_2O$')
+double_plot(param, title, 0, 2, r'$H_2$', 16, 19, r'$H_2O$')
 
-double_plot(param,title,26,28,r'$N_2$',30,32,r'$O_2$')
+double_plot(param, title, 26, 28, r'$N_2$', 30, 32, r'$O_2$')
 
 fig, ax = plt.subplots(1, 1)
-sequence_plot(param,ax,42,44,r'$CO_2$',True)
+sequence_plot(param, ax, 42, 44, r'$CO_2$', True)
 fig.suptitle(r'variation of {}'.format(param))
 plt.tight_layout()
 plt.savefig("Report/DataResultsPlots/{}_variation_CO2.pdf".format(param))
 plt.show()
 
-double_plot(param,title,0,2,'h2',42,44,'co2')
-
-
-
-
+double_plot(param, title, 0, 2, 'h2', 42, 44, 'co2')
 
 combine = 1
 relative = False
@@ -89,7 +83,7 @@ for i in [0, 1]:
     ax3.plot(amu, p, label=detector[i])
     ax3.errorbar(amu, p, err, capsize=3, capthick=0.4, ecolor="black", elinewidth=0.4, fmt='none')
     popt = fit_peak(amu, p, ax=ax3)
-    
+
 ax3.set_title(r'$N_2$')
 
 if relative:

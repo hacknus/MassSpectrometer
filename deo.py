@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 from utils import fit_peak
 from nist import get_nist_peaks
 
-
 relative = False
 combine = 1
 start = 0
@@ -18,7 +17,6 @@ fig, ax = plt.subplots(1, 1)
 
 scale_propane = np.max(p[(amu > 28.5) & (amu < 30)]) / 10000
 scale_butane = np.max(p[(amu > 42) & (amu < 44)]) / 10000
-
 
 ax.bar(n_propane.m, n_propane.y * scale_propane, width=0.9, alpha=0.5, color="blue", label="NIST Propane")
 ax.bar(n_butane.m, n_butane.y * scale_butane, width=0.9, alpha=0.5, color="orange", label="NIST Butane")

@@ -23,7 +23,7 @@ def sequences(filename, baseline_filename, combine=5, start=0, end=140, relative
         df["p"] = df["p"] - df_noise["p"]
         df["err"] = np.sqrt(df["err"] ** 2 + df_noise["err"] ** 2)
     amu, p, err = hist(df, filename, combine, plot=False)
-    
+
     if relative:
         err = err / sum(p) * 100
         p = p / sum(p) * 100
@@ -38,7 +38,6 @@ def sequences(filename, baseline_filename, combine=5, start=0, end=140, relative
     amu = amu[start:end + 1]
     p = p[start:end + 1]
     err = err[start:end + 1]
-
 
     if plot:
         fig, ax = plt.subplots(1, 1)
@@ -59,4 +58,4 @@ def sequences(filename, baseline_filename, combine=5, start=0, end=140, relative
 
 
 if __name__ == '__main__':
-    sequences('xenon_highres.csv',False, 1, 0, 2, False, True, True)
+    sequences('xenon_highres.csv', False, 1, 0, 2, False, True, True)

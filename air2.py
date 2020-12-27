@@ -83,10 +83,12 @@ plt.xlabel('breath')
 plt.savefig("Report/DataResultsPlots/air.pdf")
 plt.show()
 
+
 # fraction
 
 def linear(x, m, b):
-    return m*x + b
+    return m * x + b
+
 
 frac_err[0] = frac_err[1]
 
@@ -94,7 +96,7 @@ popt, pcov = curve_fit(linear, np.arange(0, 6), frac, sigma=frac_err)
 
 print(f"m = {100 * popt[0]:.4f} +/- {100 * np.sqrt(pcov[0][0]):.4f}")
 
-#plt.plot(np.arange(0, 6), linear(np.arange(0, 6), *popt), color="red", ls="--")
+# plt.plot(np.arange(0, 6), linear(np.arange(0, 6), *popt), color="red", ls="--")
 plt.errorbar(np.arange(0, 6), frac, frac_err, color="red", capsize=3, capthick=0.4,
              ecolor="black",
              elinewidth=0.4,

@@ -75,12 +75,12 @@ def convert_file(filename, average=False):
             for c in range(2, cycles + 1):
                 d[f"p{c}"] = np.array(df[df.Cycle == c]["SEM torr"])
     else:
-        i=2
-        if filename[0:42]=='Data/restgasspektrum_FARx7_20prozent_5res_' :
+        i = 2
+        if filename[0:42] == 'Data/restgasspektrum_FARx7_20prozent_5res_':
             print('true')
-            i=3
+            i = 3
         if filename == 'Data2/xenonbaseline_highres.csv':
-            i=3
+            i = 3
         if filename == 'Data2/mix_baseline2':
             i = 3
         if filename == 'co2_premature_balloon_loss':
