@@ -1,8 +1,101 @@
 \newpage
 \section{Method} \label{sec:method}
 \subsection{Setup}
+The setup of the experiment consists of a tubing system based around a T-piece and five valves by Swagelock to attach the probe to the machine.
+A schematic setup is shown in figure \ref{fig:setup_full}.
+\begin{figure}[h!]
+\centering
+\begin{circuitikz}
+
+    \draw[ultra thick, ->] (5, -2) to (5.75,-2) to (5.75, -0.2);
+    
+    \begin{scope}[color=red, every node/.style={color=red}]
+        \draw[red] (7,-1.8) to[short] (5.75,-1.8) to[L] (5.75,-0.8) to[short] (7,-0.8);
+        \node at (7.5, -1.3) {Heater 2};
+    \end{scope}
+    
+    \draw[ultra thick] (4,-2) to (2,-2);
+    \draw[ultra thick, -{angle 90 reversed}] (1,-2) to (0,-2);
+    \node at (-1.5,-2) {Sample inlet};
+    \draw[ultra thick] (3,-2) to (3,-3);
+ 
+     
+    %%% valve 1 symbol
+    \node at (1.5,-1) {V1};
+    \draw[thick] (2,-2.4) to (2,-1.6) to (1, -2.4) to (1, -1.6) to (2, -2.4);
+    \draw[thick] (1.5,-2) to (1.5,-1.4);
+    \draw[thick] (1.3,-1.4) to (1.7,-1.4);
+    \filldraw[white] (1.5,-2) circle (0.2);
+    \draw[thick] (1.5,-2) circle (0.2);
+    
+    %%% valve 2 symbol
+    \node at (4.5,-1) {V2};
+    \draw[thick] (5,-2.4) to (5,-1.6) to (4, -2.4) to (4, -1.6) to (5, -2.4);
+    \draw[thick] (4.5,-2) to (4.5,-1.4);
+    \draw[thick] (4.3,-1.4) to (4.7,-1.4);
+    \filldraw[white] (4.5,-2) circle (0.2);
+    \draw[thick] (4.5,-2) circle (0.2);
+    
+    %%% valve 3 symbol
+    \node at (4,-3.5) {V3};
+    \draw[thick] (2.6,-3) to (3.4,-3) to (2.6,-4) to (3.4,-4) to (2.6,-3);
+    \draw[thick] (3,-3.5) to (3.6,-3.5);
+    \draw[thick] (3.6,-3.3) to (3.6,-3.7);
+    \filldraw[white] (3,-3.5) circle (0.2);
+    \draw[thick] (3,-3.5) circle (0.2);
+    
+    \draw[ultra thick, ->] (3,-4) to (3,-4.8);
+    
+    \draw[ultra thick] (3,-6) circle (1);
+    \node at (3,-6.3) {Pump 2};
+    \node at (3,-5.7) {Vacuum};
+
+    
+    \draw[thick, red] (4,2.2) to (4, 3);
+    \node[red] at (4,3.5) {Heater 1};
+
+    \draw[ultra thick] (0,0) rectangle (5,2);
+    \node at (2.5,1) {Mass-Spectrometer};
+
+    \draw[ultra thick] (5.5,0) rectangle (6 ,2);
+
+    \draw[thick,->] (6,1.5) to (-0.7,1.5) to (-0.7,1);
+    \draw[ultra thick] (6,1.5) to (6.5,1.5);
+    \draw[ultra thick] (6.5,1.3) to (6.5,1.7);
+    \filldraw[white] (6,1.5) circle (0.15);
+    \draw[thick, black] (6,1.5) circle (0.15);
+    \node at (7.8,1.5) {V5 Bypass};
+    
+    \draw[thick, ->] (6,0.5) to (4.5,0.5);
+    \draw[ultra thick] (6,0.5) to (6.5,0.5);
+    \draw[ultra thick] (6.5,0.3) to (6.5,0.7);
+    \filldraw[white] (6,0.5) circle (0.15);
+    \draw[thick, black] (6,0.5) circle (0.15);
+    \node at (7.8,0.5) {V4 Input};
+    
+    \draw[ultra thick] (5.5,1) to (5,1);
+
+    \draw[ultra thick, ->] (0,1) to (-1.8,1);
+    \draw[ultra thick] (-3,1) circle (1);
+    \node at (-3, 0.7) {Pump 1};
+    \node at (-3, 1.3) {Vacuum};
+    
+
+    \draw[ultra thick, <->, dashed] (2.5,2.2) to (2.5,4) to (-1.8,4);
+    \draw[rounded corners=5] (-5,3.5) rectangle (-2,4.5);
+    \node at (-3.5,4) {Computer};
+    
+    
+\end{circuitikz}
+\caption{A schematic top level view of the mass-spectrometer used in this experiment. The pressure sensors are not included in this figure.}
+\label{fig:setup_full}
+\end{figure}
+As an initial step, Vacuum Pump 1 was turned on over night to safely create low enough pressures inside the chamber in the Mass-Spectrometer.
+In order to first clear the remaining components out of the system, the Vacuum Pump 2 will be turned on and valves V3 and V2 are opened. After around 30 seconds, V2 is closed again. We then connect the sample to the sample inlet and open V1 for a short time to drain the rest-components out of the inlet tube. After closing V1 this tube should be filled with only the sample and no air or components of the last sample. We then close V3 and turn of the Vacuum Pump 2.
+To start a measurement, we open V1 and V2 and regulate the pressure inside the Mass-Spectrometer with the Input and Bypass valves (V4 and V5) until we get a pressure in the range of $10^{-5}-10^{-6}$ Torr. As soon as the pressure is stable, the measurement can be started on the computer application. Once the measurement is finished the sample can be exchanged and the whole process repeated. The heating of the system only needs to be turned on if the sample contains a high amount of water (e.g. breath). If turned on, it needs to be turned on for about one hour for the temperature to reach a stable equilibrium before conducting the measurement. 
+
 \subsection{Data Set}
-The mass spectrometer was set to perform each gas measurement seven times. In this way, seven readings were available for all partial pressures measured at the different mass-to-charge ratios. The values obtained were averaged and the standard deviation of the data was taken as the error. After this was done, only the averaged data were used. 
+The mass spectrometer was set to perform each gas measurement seven times. In this way, seven readings were available for all partial pressures measured at the different mass-to-charge ratios. The values obtained were averaged and the standard deviation of the data was taken as the error. After this was done, only the averaged data was used. 
 
 \subsection{Curve Fit}
 \label{sec:fit}
@@ -46,7 +139,7 @@ The error on this calibration is derived in \ref{app:err_cal}.
 
 Using the {\scshape Gaussian} fit described in the upper part, it was now possible to simplify the data set so that only one partial pressure is assigned to each integer or half-integer mass-to-charge ratio. 
 
-In order to estimate which gas components make up the partial pressure of individual mass-to-charge ratios, we used data from \texttt{NIST}. These data sets contain at which $m/q$ which partial pressure is to be expected in a measurement with a mass spectrometer. The partial pressures are given relative to each other and normalised in such a way that the mass-to-charge ratio that occurs most is assigned the value one. \texttt{NIST} data of Xe, Ar, Kr, propane, butane, isobutane, ethanol, H$_2$O, CO$_2$, N$_2$, H$_2$O, O$_2$, H$_2$ were considered in this thesis. We wrote an algorithm which checks for each substance $i$ whether the mass-to-charge ratio which is most represented $A_{\mathrm{max}~i}$ is also present in our measurements. If so, the \texttt{NIST} ratios of substance $i$ are scaled so that their value at $A_{\mathrm{max}~i}$ exactly matches the measured partial pressure (see figure \ref{fig:illustration_nist1} substance $i$). If $A_{\mathrm{max~j}}$ of a substance $j$ is already occupied by an other substance, the \texttt{NIST} values of substance $j$ were scaled only to such an extent that, partial pressure of the two gasses at $A_{\mathrm{max}~j}$ added together matches the measured value (see fig \ref{fig:illustration_nist1} substance $j$).  
+In order to estimate which gas components make up the partial pressure of individual mass-to-charge ratios, we used data from \texttt{NIST}. These data sets contain at which $m/q$ which partial pressure is to be expected in a measurement with a mass spectrometer. The partial pressures are given relative to each other and normalised in such a way that the mass-to-charge ratio that occurs most is assigned the value one. \texttt{NIST} data of Xe, Ar, Kr, propane, butane, isobutane, ethanol, H$_2$O, CO$_2$, N$_2$, H$_2$O, O$_2$, H$_2$ were considered in this report. We wrote an algorithm which checks for each substance $i$ whether the mass-to-charge ratio which is most represented $A_{\mathrm{max}~i}$ is also present in our measurements. If so, the \texttt{NIST} ratios of substance $i$ are scaled so that their value at $A_{\mathrm{max}~i}$ exactly matches the measured partial pressure (see figure \ref{fig:illustration_nist1} substance $i$). If $A_{\mathrm{max~j}}$ of a substance $j$ is already occupied by an other substance, the \texttt{NIST} values of substance $j$ were scaled only to such an extent that, partial pressure of the two gasses at $A_{\mathrm{max}~j}$ added together matches the measured value (see fig \ref{fig:illustration_nist1} substance $j$).  
 
 \begin{figure}[h!]
     \centering
@@ -55,7 +148,7 @@ In order to estimate which gas components make up the partial pressure of indivi
     \label{fig:illustration_nist1}
 \end{figure}
 
-This procedure is only applicable as long as one of the two overlapping substances has its maximum at a mass-to-charge ratio which is not occupied by any other substance.  In the case of propane, butane and isobutane, the maximum of each substance is also represented by the other two substances. To make sure that the approximation at the mass-to-charge ratio where the substances have their maxima correspond exactly to the measured values, we set up the following system of equations  
+This procedure is only applicable as long as one of the two overlapping substances has its maximum at a mass-to-charge ratio which is not occupied by any other substance.  In the case of propane, butane and isobutane, the maximum of each substance is also w by the other two substances. To make sure that the approximation at the mass-to-charge ratio where the substances have their maxima correspond exactly to the measured values, we set up the following system of equations  
 \begin{align} \label{eq:coef1}
     p_{43} = \alpha_{\mathrm{pro}}\cdot r_\mathrm{pro43} + \alpha_\mathrm{but} \cdot r_\mathrm{but43} + \alpha_\mathrm{iso}\cdot r_\mathrm{iso43} \\
     \label{eq:coef2}
@@ -95,7 +188,7 @@ The partial pressure $p_{m_k}$ can be calculated as
      \kappa_{m_k} = \frac{p_{m_k}'}{p_{k}'}.
  \end{align}
  
-In this equation $p_{k}'$ is the partial pressure and $p_{m_k}'$ is the partial pressure due to substance $m$ according to the first kind of approximation. The first kind of approximation was done by calculating the scale factor $\alpha_m$ for each substance. Here $\alpha_m$ is the factor, the \texttt{NIST} ratios $r_{m_k}$ of the substance must be multiplied with to obtain $p_{m_k}$. The scale factor $\alpha_m$ is equal to the measured partial pressure at $A_{{max}~m}$ minus the partial pressure already occupied by other substances or in the case of propane, butane and isobutane the coefficients are calculated according to (\ref{eq:coef1}), (\ref{eq:coef2}) and (\ref{eq:coef3}). The error estimation of this part can be seen in the appendix. 
+In this equation $p_{k}'$ is the partial pressure and $p_{m_k}'$ is the partial pressure due to substance $m$ according to the first kind of approximation. The first kind of approximation was done by calculating the scale factor $\alpha_m$ for each substance. Here $\alpha_m$ is the factor, the \texttt{NIST} ratios $r_{m_k}$ of the substance must be multiplied with to obtain $p_{m_k}$. The scale factor $\alpha_m$ is equal to the measured partial pressure at $A_{{max}~m}$ minus the partial pressure already occupied by other substances or in the case of propane, butane and isobutane the coefficients are calculated according to (\ref{eq:coef1}), (\ref{eq:coef2}) and (\ref{eq:coef3}). The error estimation of this part can be seen in the appendix \ref{app:err_comp}. 
 
 
 

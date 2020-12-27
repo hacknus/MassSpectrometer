@@ -231,12 +231,15 @@
     $$ n_{\text{O}_2} = (14.17 \pm 1.97) \%$$
     And the initial value of carbon dioxide:
     $$ n_{\text{CO}_2} = (1.47 \pm 0.56) \%$$
+    The literature value of ambient air is given as \cite{air}
+    $$ 78.08 \%\; \text{N}_2 \qquad 20.94 \%\; \text{O}_2 \qquad 0.93 \%\; \text{Ar} \qquad 0.04 \%\; \text{CO}_2 \qquad 0.01 \%\;\text{rest}$$
+    and lies outside of the error range of our calculated initial values. Since we were in a closed room in the basement, we can explain the higher CO$_2$ amount. We assume that the system underestimates the amount of O$_2$ because it is less sensitive to this element.
     The two fits assume that the conversion ratio is 1:1. The high deviation of our datapoints from our fit is suspected to be due to the amount of nitrogen decreasing. The amount of Nitrogen is fluctuating between different measurements, and since nitrogen has a significant impact on the overall pressure, we see it directly in the normalised values for CO$_2$ and O$_2$ in the absolute amount plot. This correlation effect is also visible in  the relative plot where we plot the ratio of the amount of CO$_2$ and O$_2$. The factor $p$ we received from the fit is:
     $$p = (90.07 \pm 3.93) \;\text{per breath}$$
     This would suggest that around 9.93 $\pm$ 3.93 \% of the inhaled oxygen would be converted to carbon-dioxide during one breath.
     In reality, the oxygen amount decreases by about 4 to 5 \% per breath \cite{breath}.\\
     In figure \ref{fig:air}a we also notice that the error-bars on the oxygen measurements are significantly larger than the ones for the carbon-dioxide measurements. This is an indication that the system has not the same sensitivity for both components. Probably because the two components are not ionised equally well.
-    In figure \ref{fig:air}b we see that the ratio of CO$_2$/O$_2$ increases and reaches 1. It follows a more or less linear pattern.
+    In figure \ref{fig:air}b we see that the ratio of CO$_2$/O$_2$ increases and reaches 1. It approximates a linear behaviour.
     
     
     \subsection{Measurement of Ethanol}
@@ -249,7 +252,7 @@
     \caption{The setup to attach a liquid sample to the system. The gaseous phase will be pumped to the mass spectrometer while the liquid phase will stay inside the container.}
     \label{fig:ethanol}
     \end{figure}
-    Finally, a few sips of vodka were drunk and then the breath was blown into a balloon and connected to the mass spectrometer. We wanted to find out whether it is possible to detect alcohol in breath with this mass spectrometer. For the measurements of vodka and the alcohol breath, we chose measurement distances of 0.2 amu/e. The reason for this is that we first carried out all measurements with the large intervals and then repeated them with 0.1 amu. However, since we found that we did not detect any signs of ethanol peaks with vodka, the measurement was not repeated. Nevertheless, we would like to show the results of these measurements.
+    Finally, a few sips of vodka were consumed and then the breath was blown into a balloon and connected to the mass spectrometer. We wanted to find out whether it is possible to detect alcohol in breath with this mass spectrometer. For the measurements of vodka and the alcohol breath, we chose measurement distances of 0.2 amu/e. The reason for this is that we first carried out all measurements with the large intervals and then repeated them with 0.1 amu. However, since we found that we did not detect any signs of ethanol peaks with vodka, the measurement was not repeated. Nevertheless, we would like to show the results of these measurements.
     
     The output of the ethanol measurement can be seen in figure \ref{fig:ethanol2}. As we can see, in addition to the usual components such as H$_2$O, CO$_2$ and air components, we also measure H$_2$ and the ethanol we are looking for. The high H$_2$ content is striking. This could have come about through a reaction of ethanol. For example, the reaction of ethanol to acetaldehyde and H$_2$ would be possible. According to the \texttt{NIST} data acetaldehyde has its strongest partial pressures in decreasing order at 29 amu/e, 44 amu/e, 43 amu/e, 15 amu/e and 42 amu/e. In fact, we measure all of these peaks. In all cases except 44 amu/e, the \texttt{NIST} appoximations are lower than the measured values. In the case of 44 amu/e, this is the CO$_2$ maximum, which by construction is completely covered by CO$_2$. The occurrence of acetaldehyde would therefore explain our measured values even better. 
     
@@ -292,7 +295,7 @@
     \begin{figure}[h]
             \centering
             \subfloat[balloon with CO2 from sparkling water]{\label{figure:sparkling}
-                \includegraphics[width=0.47\textwidth, origin=c]{Report/pictures/ballon_bottle2.JPG}}\quad
+                \raisebox{20pt}{\includegraphics[width=0.35\textwidth, angle=-90, origin=c]{Report/pictures/ballon_bottle2.JPG}}}\quad
             \subfloat[balloon attached to the system]{\label{figuer:sparkling2}
                 \includegraphics[width=0.47\textwidth]{Report/pictures/ballon_setup.JPG}}\quad
             \caption{The setup of the experiment with samples filled into a balloon.}
@@ -346,6 +349,6 @@
     \label{fig:air0}
     \end{figure}
     
-    As we can see in figure \ref{fig:sparkling_water}, a very large proportion of CO$_2$ in the sparkling water measurement was indeed detected. In order to be able to compare this CO$_2$ content, a measurement of pure air is shown in figure \ref{fig:air0}. We find that they only differ in the CO$_2$ occurrence in the sparkling water plot. Although there is a clear argon peak in the room air, this is due to residual gases from the noble gas measurements conducted before. 
+    As we can see in figure \ref{fig:sparkling_water}, a very large proportion of CO$_2$ in the sparkling water measurement was indeed detected. In order to be able to compare this CO$_2$ content, a measurement of pure air is shown in figure \ref{fig:air0}. We find that they only differ in the CO$_2$ occurrence in the sparkling water plot. Although there is a clear argon peak in the ambient air, this is due to residual gases from the noble gas measurements conducted before. 
     \FloatBarrier
     
