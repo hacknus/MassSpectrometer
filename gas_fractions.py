@@ -1,5 +1,5 @@
 import numpy as np
-from nist import get_nist_peaks, nist_aprox
+from nist import get_nist_peaks, nist_approx
 from gas_analysis import gas_analysis
 import csv
 
@@ -22,18 +22,18 @@ def Fraction_Table(comp, p, err, exp_comp, measured):
     return exp_comp, frac, frac_err
 
 
-deo = nist_aprox(*gas_analysis('deo.csv', 'airbaseline.csv'), 'Deo')
+deo = nist_approx(*gas_analysis('deo.csv', 'airbaseline.csv'), 'Deo')
 exp_comp = ['ethanol', 'propane', 'butane', 'isobutane']
 Fraction_Table(*deo, exp_comp, 'deo')
 
-residual = nist_aprox(*gas_analysis('xenonbaseline_highres.csv', False), 'resiudal gas')
+residual = nist_approx(*gas_analysis('xenonbaseline_highres.csv', False), 'resiudal gas')
 exp_comp = [r'H$_2$', r'H$_2$O', r'CO$_2$', r'N$_2$', r'O$_2$']
 Fraction_Table(*residual, exp_comp, 'residual')
 
-nobel_gas = nist_aprox(*gas_analysis('mix2.csv', 'mix_baseline2.csv'), 'mix')
+nobel_gas = nist_approx(*gas_analysis('mix2.csv', 'mix_baseline2.csv'), 'mix')
 exp_comp = ['Ar', 'Xe', 'Kr']
 Fraction_Table(*nobel_gas, exp_comp, 'nobel_gas')
 
-air = nist_aprox(*gas_analysis('air0.csv', 'airbaseline.csv'), 'air0')
+air = nist_approx(*gas_analysis('air0.csv', 'airbaseline.csv'), 'air0')
 exp_comp = [r'N$_2$', r'O$_2$']
 Fraction_Table(*air, exp_comp, 'air_o2_vs_n2')

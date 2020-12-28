@@ -66,7 +66,7 @@ print('acetanaldeyde')
 print(get_nist_peaks('acetaldehyde', 12))
 
 
-def nist_aprox(atom, integr_p, integr_p_err, plot_name, ethanol=False):
+def nist_approx(atom, integr_p, integr_p_err, plot_name, ethanol=False):
     amu_o2, p_o2_scaled, p_o2_scaled_err = scale_nist(atom, integr_p, integr_p_err, 'oxygen')
     p_o2_0 = p_o2_scaled
     amu_argon, p_argon_scaled, p_argon_scaled_err = scale_nist(atom, integr_p, integr_p_err, 'argon')

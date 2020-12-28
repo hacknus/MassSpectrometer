@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from utils import fit_peak, gauss
 from scipy.integrate import quad
 from scipy.optimize import curve_fit
-from nist import get_nist_peaks, nist_aprox
+from nist import get_nist_peaks, nist_approx
 from gas_analysis import gas_analysis
 
 
@@ -27,9 +27,9 @@ o2relerr = np.zeros(6, float)
 
 for i in np.arange(6):
     if i != 0:
-        air = nist_aprox(*gas_analysis('air{}.csv'.format(i), 'airbaseline.csv'), 'air{}'.format(i))
+        air = nist_approx(*gas_analysis('air{}.csv'.format(i), 'airbaseline.csv'), 'air{}'.format(i))
     else:
-        air = nist_aprox(*gas_analysis('air00.csv', 'airbaseline.csv'), 'air00')
+        air = nist_approx(*gas_analysis('air00.csv', 'airbaseline.csv'), 'air00')
     co2[i] = air[1][11]
     co2err[i] = air[2][11]
     o2[i] = air[1][10]

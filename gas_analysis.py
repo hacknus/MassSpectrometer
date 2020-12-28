@@ -5,7 +5,7 @@ from read_data import hist
 from choose_sequences import sequences
 from voltage_variation import double_plot, sequence_plot
 from utils import fit_peak
-from nist import get_nist_peaks, nist_aprox
+from nist import get_nist_peaks, nist_approx
 
 
 def gas_analysis(file, baseline_file=False, new=True):
@@ -17,7 +17,7 @@ def gas_analysis(file, baseline_file=False, new=True):
     plot = False
     amu, p, err = sequences(file, baseline_file, combine, amu_min, amu_max, relative, plot, new)
     plt.plot(amu, p)
-    plt.show
+    plt.show()
 
     atom = []
     if new:
